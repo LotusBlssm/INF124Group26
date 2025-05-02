@@ -1,0 +1,23 @@
+<p>search-result works!</p>
+<div class="row search-result-container">
+    <div class="col-2 image-container">
+        @if (gameData.image) {
+            <img [src]="gameData.image">
+        }
+        @else {
+            <div class="image-placeholder"></div>
+        }
+    </div>
+    <div class="col-5 textual-info-container">
+        <h2>{{gameData.title}}</h2>
+        <p>{{gameData.company}} — {{gameData.releaseDate}}</p>
+        <p>{{gameData.description}}</p>
+    </div>
+    <div class="col-3 tags-container">
+        <p>Users say...</p>
+    </div>
+    <div class="col-2 rating-container">
+        <p>Rated</p>
+        <p>{{gameData.rating.toFixed(1)}} / 5</p>
+    </div>
+</div>
