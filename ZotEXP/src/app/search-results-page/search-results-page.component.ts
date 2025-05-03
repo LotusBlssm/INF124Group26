@@ -13,9 +13,18 @@ import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 export class SearchResultsPageComponent implements OnInit {
   PAGE_SIZE = 5; // will change with settings
   FILTERS = [
-    (a:any,b:any) => b.releaseDate - a.releaseDate,
-    (a:any,b:any) => a.title.localeCompare(b.title),
-    (a:any,b:any) => b.rating - a.rating
+    {
+      name: "Release date", 
+      filter: (a:any,b:any) => b.releaseDate - a.releaseDate
+    },
+    {
+      name: "Title", 
+      filter: (a:any,b:any) => a.title.localeCompare(b.title)
+    },
+    {
+      name: "Rating", 
+      filter: (a:any,b:any) => b.rating - a.rating
+    }
   ]
   allSearchResults = this.getSearchResults();
   filteredSortedResults = [...this.allSearchResults];
@@ -34,8 +43,9 @@ export class SearchResultsPageComponent implements OnInit {
 
   updatePageResults() {
     let filterIndex : any = this.sortForm.value.sortBy;
-    this.filteredSortedResults = this.allSearchResults.sort(this.FILTERS[filterIndex]);
+    this.filteredSortedResults = this.allSearchResults.sort(this.FILTERS[filterIndex].filter);
   }
+  
   // This will change when the backend is made
   getSearchResults() {
     function randomDate(start: Date, end: Date) {
