@@ -1,0 +1,34 @@
+<div class="review-container">
+    <div class="left-right">
+        <div class="left-container">
+            @if (reviewData.profilePicture) {
+                <img src="reviewData.profilePicture">
+            }
+            @else {
+                <div class="image-placeholder"></div>
+            }
+            <p>{{reviewData.memberName}}</p>
+            <p>
+                {{
+                    reviewData.date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    }).replace(',', '')
+                }}
+            </p>
+        </div>
+        <div class="right-container">
+            <div class="rating-container">
+                <p>{{reviewData.rating.toFixed(1)}} / 5</p>
+                <igc-rating readOnly [value]="reviewData.rating" min="1" max="5"></igc-rating>
+            </div>
+            <div class="text-container">
+                {{reviewData.message}}
+            </div>
+            <div class="tags-container">
+
+            </div>
+        </div>
+    </div>
+</div>

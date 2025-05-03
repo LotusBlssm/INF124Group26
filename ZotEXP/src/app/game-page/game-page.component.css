@@ -1,0 +1,61 @@
+.top-container {
+    margin-top: 2rem;
+}
+
+.image-placeholder {
+    width: 200px;
+    height: 300px;
+    max-height: 300px;
+    background-color: gray;
+}
+
+.left-right {
+    display: flex;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-tags-section-container {
+    display: flex;
+}
+
+.rest-of-game-info-container {
+    display: flex;
+}
+
+.company-date-conatiner {
+    min-width: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.rest-of-game-info-container > * {
+    margin-left: 10px;
+}
+
+.title-container {
+    margin-left: 10px;
+}
+
+app-game-tag, app-user-tag {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.user-tags-section-container {
+    margin-left: 10px;
+}
+
+.rating-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reviews {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

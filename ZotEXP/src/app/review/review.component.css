@@ -1,0 +1,43 @@
+.left-right {
+    display: flex;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-container, .right-container {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.tags-container {
+    display: flex;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+}
+
+.rating-container > * {
+    margin-left: 5px;
+    margin-right: 5px
+}
+
+.tags-container {
+    display: flex;
+}
+
+.image-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: gray;
+}
