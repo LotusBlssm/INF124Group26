@@ -1,0 +1,22 @@
+label {
+    display: block;
+}
+
+.form-select {
+    width: 50%;
+}
+
+:host ::ng-deep pagination .pagination * {
+    color: white;
+}
+
+:host ::ng-deep pagination :not(.active) * {
+    background-color: black;
+}
+
+:host ::ng-deep pagination .active * {
+    background-color: white;
+    color: black;
+    border: 1px solid white;
+}
+

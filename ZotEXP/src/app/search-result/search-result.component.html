@@ -8,16 +8,31 @@
             <div class="image-placeholder"></div>
         }
     </div>
-    <div class="col-5 textual-info-container">
-        <h2>{{gameData.title}}</h2>
-        <p>{{gameData.company}} — {{gameData.releaseDate}}</p>
+    <div class="col-6 textual-info-container">
+        <h2 class="italics">{{gameData.title}}</h2>
+        <p>
+            <span class="italics">{{gameData.company}}</span> — 
+            {{
+                gameData.releaseDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }).replace(',', '')
+            }}
+        </p>
         <p>{{gameData.description}}</p>
     </div>
-    <div class="col-3 tags-container">
+    <div class="col-2 user-tags-container">
         <p>Users say...</p>
+        <div class="user-tags">
+            @for (userTag of gameData.userTags; track userTag) {
+                <app-user-tag text="{{userTag}}"></app-user-tag>
+            }
+        </div>
     </div>
-    <div class="col-2 rating-container">
+    <div class="col-2 rating-container centered">
         <p>Rated</p>
         <p>{{gameData.rating.toFixed(1)}} / 5</p>
+        <igc-rating readOnly [value]="gameData.rating" min="1" max="5"></igc-rating>
     </div>
 </div>

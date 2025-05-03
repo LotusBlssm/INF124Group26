@@ -4,3 +4,22 @@
     max-height: 300px;
     background-color: gray;
 }
+
+.italics {
+    font-style: italic;
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user-tags app-user-tag {
+    margin-right: 10px;
+}
