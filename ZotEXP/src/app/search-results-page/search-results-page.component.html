@@ -6,7 +6,7 @@
         <pagination 
             [boundaryLinks]="true" 
             [maxSize]="5"
-            [totalItems]="searchResults.length"
+            [totalItems]="allSearchResults.length"
             [itemsPerPage]="PAGE_SIZE"
             (pageChanged)="handlePageChange($event)"
             previousText="&lsaquo;" 
@@ -19,9 +19,9 @@
         <form [formGroup]="sortForm">
             <label for="sort">Sort by</label>
             <select class="form-select" formControlName="sortBy">
-                <option [value]="filters[0]">Release date</option>
-                <option [value]="filters[1]">Title</option>
-                <option [value]="filters[2]">Rating</option>
+                <option [value]="0">Release date</option>
+                <option [value]="1">Title</option>
+                <option [value]="2">Rating</option>
             </select>
         </form>
     </div>
@@ -29,8 +29,8 @@
         {{sortForm.value.sortBy}}
     </div>
 </div>
-@for (pageResult of pageResults.slice((this.page-1) * this.PAGE_SIZE, (this.page-1) * this.PAGE_SIZE + this.PAGE_SIZE); track pageResult; let last = $last) {
-    <app-search-result [gameData]="pageResult"></app-search-result>
+@for (result of filteredSortedResults.slice((this.currentPage-1) * this.PAGE_SIZE, (this.currentPage-1) * this.PAGE_SIZE + this.PAGE_SIZE); track result; let last = $last) {
+    <app-search-result [gameData]="result"></app-search-result>
 
     @if (!last) {
         <hr>

@@ -11,40 +11,36 @@ import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 })
 
 export class SearchResultsPageComponent implements OnInit {
-  searchResults = this.getSearchResults();
-  pageResults = [...this.searchResults];
   PAGE_SIZE = 5; // will change with settings
-  page = 1;
-  sortForm = new FormGroup({
-    sortBy: new FormControl<(a: any, b: any) => number>((a:any, b:any) => 0)
-  })
-  filters = [
+  FILTERS = [
     (a:any,b:any) => b.releaseDate - a.releaseDate,
     (a:any,b:any) => a.title.localeCompare(b.title),
     (a:any,b:any) => b.rating - a.rating
   ]
+  allSearchResults = this.getSearchResults();
+  filteredSortedResults = [...this.allSearchResults];
+  currentPage = 1;
+  sortForm = new FormGroup({
+    sortBy: new FormControl(1)
+  })
 
   ngOnInit() {
     this.sortForm.valueChanges.subscribe(val => {
+      console.log('event');
       console.log(typeof val);
       this.updatePageResults();
     });
   }
 
   updatePageResults() {
-    let lambda = this.sortForm.value.sortBy;
-    lambda = this.filters[2];
-    if (typeof lambda === 'function') {
-      this.pageResults = this.searchResults.sort(lambda);
-      console.log("updated!")
-    }
+    let filterIndex : any = this.sortForm.value.sortBy;
+    this.filteredSortedResults = this.allSearchResults.sort(this.FILTERS[filterIndex]);
   }
-
+  // This will change when the backend is made
   getSearchResults() {
     function randomDate(start: Date, end: Date) {
       return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     }
-    // This will change when the backend is made
     let searchResults = [];
     for (let i = 0; i < 42; ++i) {
       searchResults.push({
@@ -62,6 +58,6 @@ export class SearchResultsPageComponent implements OnInit {
   }
 
   handlePageChange(event:any) {
-    this.page = event.page;
+    this.currentPage = event.page;
   }
 }
