@@ -1,1 +1,22 @@
-<p>login-page works!</p>
+<div class="topContainer">
+    <div class="main"> 
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="login">
+            <form>
+                <label for="chk" aria-hidden="true">WELCOME!</label>
+                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="loginObj.username">
+                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="loginObj.password">
+                <button (click)="onLogIn()"> Log In</button>
+            </form>
+        </div>
+        <div class="signup">
+            <form>
+                <label for="chk" aria-hidden="true">Signup</label>
+                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="signupObj.username">
+                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.password">
+                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.passwordCheck">
+                <button (click)="onSignUp()"> Create Account </button>
+            </form>
+        </div>
+    </div>
+</div>
