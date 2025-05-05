@@ -7,20 +7,54 @@
     border-bottom: 1px solid #ddd;
 }
 
-.search-bar-placeholder input {
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* transition: width 0.3s ease; */
+  }
+
+.search-bar input {
     padding: 5px;
     font-size: 16px;
-    width: 200px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f1f1f1;
+    color: black
 }
 
-.header-icons-left, .header-icons-right {
+.search-input {
+  width: 300px;
+  transition: width 0.3s ease;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Expand on focus and/or hover */
+.search-input:focus, .search-input:hover {
+  width: 500px;
+}
+
+.header-icons-left {
+    display:flex;
+    justify-content: left;
+    margin-left: 50px;
+    gap: 50px;
+}
+
+.header-icons-right{
+    display:flex;
+    justify-content: right;
+    margin-right: 50px;
+    gap: 50px;
+}   
+
+.header-icon {
     color: white;
 }
 
-.header-icons-left:hover, .header-icons-right:hover {
+.header-icon:hover{
     color: lightgray;
     background-color: #6675f7;
     cursor: pointer;
