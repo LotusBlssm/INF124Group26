@@ -1,0 +1,96 @@
+/* Base container */
+.top-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+/* Left section: Terms of Service */
+.help-left {
+  flex: 1;
+  min-width: 280px;
+  margin-right: 20px;
+  background-color: #bcbcbc; /* Light gray background */
+  line-height: 1.5; /* Set line-height for better readability */
+}
+
+.help-left b {
+  margin-right: 50px;
+  color:#000;
+  font-size: 1.2em;
+}
+
+.help-left p {
+  margin: 8px 0;
+  color:#000;
+  line-height: 1.5;
+}
+
+.help-right strong {
+  margin: 8px 0;
+  color:#000;
+  line-height: 1.5;
+}
+
+/* Right section: Feedback form */
+.help-right {
+  flex: 1;
+  min-width: 300px;
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Input and select styling */
+.help-right input[type="text"],
+.help-right select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1em;
+  color: #000;
+}
+
+/* Submit button */
+.help-right input[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.help-right input[type="submit"]:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+/* Success message */
+.success-message {
+  margin-top: 15px;
+  color: green;
+  font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+  .top-container {
+    flex-direction: column;
+  }
+
+  .help-left,
+  .help-right {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
