@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchResultComponent } from '../search-result/search-result.component';
+import { SearchResultComponent } from '../../search-result/search-result.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 

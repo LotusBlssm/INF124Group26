@@ -1,7 +1,7 @@
 import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { GameTagComponent } from '../game-tag/game-tag.component';
-import { UserTagComponent } from '../user-tag/user-tag.component';
-import { ReviewComponent } from '../review/review.component';
+import { GameTagComponent } from '../../game-tag/game-tag.component';
+import { UserTagComponent } from '../../user-tag/user-tag.component';
+import { ReviewComponent } from '../../review/review.component';
 
 @Component({
   selector: 'app-game-page',

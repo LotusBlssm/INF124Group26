@@ -1,10 +1,10 @@
 import { Routes,} from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
-import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { HelpPageComponent } from './help-page/help-page.component';
-import { SiteSettingsPageComponent } from './site-settings-page/site-settings-page.component';
-import { SearchResultsPageComponent } from './search-results-page/search-results-page.component';
-import { GamePageComponent } from './game-page/game-page.component';
+import { HomePageComponent } from './Pages/home-page/home-page.component';
+import { ProfilePageComponent } from './Pages/profile-page/profile-page.component';
+import { HelpPageComponent } from './Pages/help-page/help-page.component';
+import { SiteSettingsPageComponent } from './Pages/site-settings-page/site-settings-page.component';
+import { SearchResultsPageComponent } from './Pages/search-results-page/search-results-page.component';
+import { GamePageComponent } from './Pages/game-page/game-page.component';
 
 export const routes: Routes = [
     {
