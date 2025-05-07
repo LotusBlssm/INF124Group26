@@ -1,0 +1,36 @@
+<div class="top-container">
+    <div class="main">
+        <div class="help-left">
+            <b> Terms of Services </b> <br>
+            <p> 1. Don't bully other users, because that's not right </p>
+            <p> 2. Keep reviews & discussion focused on games themselves, whenever possible </p>
+            <p> 3. Have fun, and happy rating </p> <br>
+          </div>
+        
+          <div class="help-right">
+            <form (ngSubmit)="onSubmit()" [formGroup]="feedbackForm">
+              <p><strong>Feedback? Concerns? Connect Us</strong></p>
+              <!-- Email input-->
+              <input type="text" id="frame" formControlName="email" placeholder="Enter email" class="form-control" [(ngModel)]="feedbackObj.email">
+              <!-- Corresponse Selection-->
+              <select formControlName="corresponse" id="corTypes" required  class="form-control" [(ngModel)]="feedbackObj.type">
+                <option value="" disabled selected>Type of Correspondence</option>
+                <option value="technical">Technical Issue</option>
+                <option value="feedback">Feedback</option>
+                <option value="concern">Concern</option>
+              </select>
+              <br><br>
+              <!-- Description input-->
+              <input type="text" id="description" formControlName="description" placeholder="What's going on?"  class="form-control" [(ngModel)]="feedbackObj.description"> <br> <br>
+              <!-- Submit Button-->
+              <input type="submit" value="Submit" [disabled]="feedbackForm.invalid">
+            </form>
+        
+            <!-- Success Message -->
+            <div *ngIf="formSubmitted" class="success-message">
+              Form submitted successfully!
+            </div>
+          </div>
+    </div>
+  </div>
+  
