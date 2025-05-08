@@ -1,5 +1,26 @@
 <div class="top-container">
+    <b> Site Settings </b>
     <div class="main">
-        
+        <div class="setPassword">
+            <b> Reset Password </b>
+            <form>
+                <label for="oldPassword">Old Password</label>
+                <input type="text" name="txt">
+                <label for="newPassword">New Password</label>
+                <input type="text" name="txt"> 
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="text" name="txt">
+                <button (click)="onSetPassword()">Submit</button>
+            </form>
+        </div>
+        <div class="otherSetting">
+            <b> Other Settings </b>
+            <input type="checkbox" id="notification" onChange="toggleNotifi()">
+            <label for="setNotification">Enable Notification</label>
+            <input type="checkbox" id="ExploitContent" onChange="toggleExpContent()">
+            <label for="setExploitContent">Allow Exploit Content</label>
+            <input type="checkbox" id="ContrastMode" onChange="toggleContraMode()">
+            <label for="setConstrastMode">High Contrast Mode</label>
+        </div>
     </div>
 </div>

@@ -36,7 +36,7 @@ export class LoginPageComponent {
   onSignUp() {
     // this.signupUsers.push(this.signupObj);
     // localStorage.setItem("SignupUsers", JSON.stringify(this.signupUsers));
-    let localData = localStorage.getItem("SignupUsers");
+    let localData = localStorage.getItem("signupUsers");
     this.signupUsers = localData ? JSON.parse(localData) : []; 
 
     if (this.signupObj.password != this.signupObj.passwordCheck){
