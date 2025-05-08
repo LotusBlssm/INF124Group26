@@ -33,13 +33,26 @@ export class SiteSettingsPageComponent {
       this.errorPassword = true; 
       return 
     }
+    
 
-    if (this.newPasswordObj.newPassword == this.newPasswordObj.confirmPassword){
-      // need to think how to set new password and transfer to the 
-      return // return for now
-    } else {
+    if (this.newPasswordObj.newPassword != this.newPasswordObj.confirmPassword){
       this.errorPassword = true; 
+      return // return for now
     }
+    // check if the new password already exists 
+    const passwordCheck = this.signupUsers.some(user =>
+      user.password == this.newPasswordObj.newPassword
+    );
+    if (!passwordCheck){
+      this.errorPassword = true; 
+      return; 
+    }
+    // need to think how to set new password and transfer to the 
+    this.newPasswordObj = {
+      oldPassword: '', 
+      newPassword: '',
+      confirmPassword: ''
+    };
   }
 
   toggleNotifi(){

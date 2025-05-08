@@ -25,6 +25,7 @@
 }
 
 .help-left p {
+  text-indent: 40px;
   margin: 8px 0;
   color:#000;
   line-height: 1.5;

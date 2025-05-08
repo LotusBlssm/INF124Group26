@@ -1,11 +1,11 @@
 <div class="top-container">
     <div class="main">
         <div class="help-left">
-            <b> Terms of Services </b> <br>
-            <p> 1. Don't bully other users, because that's not right </p>
-            <p> 2. Keep reviews & discussion focused on games themselves, whenever possible </p>
-            <p> 3. Have fun, and happy rating </p> <br>
-          </div>
+            <h2> Terms of Services </h2> <br>
+            <h3> 1. Don't bully other users, because that's not right </h3>
+            <h3> 2. Keep reviews & discussion focused on games themselves, whenever possible </h3>
+            <h3> 3. Have fun, and happy rating... </h3> <br>
+        </div>
         
           <div class="help-right">
             <form (ngSubmit)="onSubmit()" [formGroup]="feedbackForm">
@@ -21,7 +21,7 @@
               </select>
               <br><br>
               <!-- Description input-->
-              <input type="text" id="description" formControlName="description" placeholder="What's going on?"  class="form-control" [(ngModel)]="feedbackObj.description"> <br> <br>
+              <input type="textarea" id="description" formControlName="description" placeholder="What's going on?"  class="form-control" [(ngModel)]="feedbackObj.description"> <br> <br>
               <!-- Submit Button-->
               <input type="submit" value="Submit" [disabled]="feedbackForm.invalid">
             </form>
