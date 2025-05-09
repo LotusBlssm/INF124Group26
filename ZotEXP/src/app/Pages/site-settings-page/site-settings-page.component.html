@@ -5,20 +5,14 @@
             <h4> Reset Password </h4>
             <form (ngSubmit)="onSetPassword()" [formGroup]="passwordForm">
                 <!-- old password -->
-                <div class='form-group'>
-                    <label for="oldPassword">Old Password</label>
-                    <input type="text" name="txt"> <br>
-                </div>
+                <label for="oldPassword">Old Password</label>
+                <input type="text" name="txt" formControlName = "oldPassword" class="form-control" [(ngModel)]="newPasswordObj.oldPassword"> <br>
                 <!-- new password -->
-                <div class='form-group'>
-                    <label for="newPassword">New Password</label>
-                    <input type="text" name="txt"> <br>
-                </div>
+                <label for="newPassword">New Password</label>
+                <input type="text" name="txt" formControlName="newPassword" class="form-control" [(ngModel)]="newPasswordObj.newPassword"> <br>
                 <!-- confirm password -->
-                <div class='form-group'>
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="text" name="txt"> <br>
-                </div> <br>
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="text" name="txt" formControlName="confirmPassword" class="form-control" [(ngModel)]="newPasswordObj.confirmPassword"> <br>
                 <!-- submit button -->
                 <input type="submit" value="submit" [disabled]="passwordForm.invalid">
             </form>

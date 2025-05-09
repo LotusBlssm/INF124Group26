@@ -29,14 +29,15 @@ export class SiteSettingsPageComponent {
     this.passwordForm = userInput.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
-      descriptioni: ['', Validators.required]
+      confirmPassword: ['', Validators.required]
     });
    } 
 
   onSetPassword(){
-    if (this.passwordForm.valid){
-      this.formSubmitted = true; 
+    if (!this.passwordForm.valid){
+      return;
     }
+    this.formSubmitted = true;
     if (this.errorPassword) {
       this.errorPassword = false; 
     }

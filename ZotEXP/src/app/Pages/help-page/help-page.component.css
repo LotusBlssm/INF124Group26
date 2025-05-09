@@ -31,7 +31,7 @@
 
 
 .term-container {
-  background-color: #737171; /* Light gray background */
+  background-color: #5e5d5d; /* Light gray background */
   line-height: 1.5; /* Set line-height for better readability */
   border: 1px solid #353434;
 
@@ -76,7 +76,7 @@
 .feedback-container {
   flex: 1;
   min-width: 300px;
-  background-color: #737171;
+  background-color: #5e5d5d;
   padding: 15px 20px;
   border-radius: 5px;
   border: 1px solid #353434;
