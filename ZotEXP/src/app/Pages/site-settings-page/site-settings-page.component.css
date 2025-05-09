@@ -4,38 +4,40 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: black;
+    text-align: center;
+    max-width: 650px;
+    margin: auto
   }
 
 .main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; 
-    padding: 20px; 
-    font-family: Arial, sans-serif; 
-    background-color: #f9f9f9; 
-    border: 1px solid #ddd; 
+    background-color: #737171;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
 }
 
-.top-container strong {
+.main h3 {
     margin: 8px 0;
     color: black; 
     line-height: 1.5; 
 }
 
-.setting-left b {
-    margin-right: 50px;
+.password-container {
+    border: 1px solid #353434;
+    background-color: #737171;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.password-container h4 {
     color: black;
-    font-size: 1.2em; 
 }
 
 /* Password inputs */ 
-.setting-left input[type="text"],
-.setting-left select {
-    width: 100%;
-    padding: 10px;
+.password-container input[type="text"],
+.password-container select {
     margin-top: 8px; 
     border: 1px solid #ccc;
     border-radius: 4px; 
@@ -44,13 +46,17 @@
     color: black; 
 }
 
-.setting-left label {
-    margin-right: 50px;
-    color: black;
-    font-size: 1.2em; 
+.form-group {
+    display: flex;
 }
 
-.setting-left input[type="submit"] {
+.form-group label {
+    color: black;
+    font-size: 1.2em;
+    margin-right: 25px;
+}
+
+.form-group input[type="submit"] {
     margin-top: 10px; 
     padding: 10px 20px; 
     font-size: 1em; 
@@ -60,19 +66,37 @@
     cursor: pointer; 
 }
 
-.setting-left input[type="submit"]:disabled {
+.password-container input[type="submit"]:disabled {
     background-color: #a0a0a0; 
     cursor: not-allowed; 
 }
 
-.setting-right b {
-    margin-right: 50px;
+.cut-line p {
     color: black;
-    font-size: 1.2em; 
 }
 
-.setting-right label {
-    margin-right: 50px;
+.other-setting-container { 
+    border: 1px solid #353434;
+    background-color: #737171;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.other-setting-container h4 {
     color: black;
-    font-size: 1.2em; 
+}
+
+.other-stting-container label {
+    color: black;
+    font-size: 1.2em;
+    margin-right: 25px;
+}
+
+.other-setting-container input[type="checkbox"],
+.other-setting-container select {
+    margin-top: 8px; 
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    box-sizing: border-box;
+    font-size: 1em; 
 }

@@ -15,7 +15,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class HelpPageComponent {
   feedback: any [] = []; 
   feedbackForm:FormGroup;
-  formSubmitted = false;
+  formSubmitted:boolean = false;
   feedbackObj:any = {
     email: '',
     type: '',
