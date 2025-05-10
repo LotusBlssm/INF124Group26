@@ -1,0 +1,23 @@
+.top-container {
+    margin-top: 4rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.tags-container {
+    /* I'd like for this to wrap the table rows dynamically,
+    so that they're evenly displayed across 2-3 rows (or 
+    however many are necessary depending on screen size) */
+    display: table-row;
+    text-align: center;
+}
+
+.bottom-container {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.app-genre-tag {
+    margin-left: 10px;
+    margin-right: 10px;
+}

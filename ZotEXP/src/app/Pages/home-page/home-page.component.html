@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<div class="top-container">
+    <div class="tags-container">
+        <!-- This is where the numerous genre/category tags will stay in a row, at the top of the page -->
+        @for (tag of genreTags; track tag) {
+            <app-genre-tag [text]="tag"></app-genre-tag>
+        }
+    </div>    
+</div>
+<div class="bottom-container">
+    <div class="bars-container">
+        <!-- This is where the "scrollable" bars of game images will fit into -->
+        @for (genre of featuredGenres; track genre; let index = $index) {
+            <app-genre-feature-bar [featuredGenreData]="genre"></app-genre-feature-bar>
+        }
+    </div>
+</div>

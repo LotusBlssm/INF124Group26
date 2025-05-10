@@ -1,0 +1,25 @@
+<div class="genre-feature-bar-container">
+    <div class="genre-title-container">
+        <div class="genre-title">
+            <h1>{{featuredGenreData.name}}</h1>
+        </div>
+        <!-- Don't place anything here, appears RIGHT of title -->
+    </div>
+    <!-- Text/elements here appear under the title -->
+    <div class="genre-subtitle-container">
+        <p>{{featuredGenreData.description}}</p>
+    </div>
+    <div class="genre-bar-covers-display-container">
+        <div class="genre-bar-covers-display">
+            @for (cover of featuredGenreData.covers; track cover; let index = $index) {
+                <!-- Decide whether to display a game-cover in each of the 8 spots, or to place a placeholder -->
+                @if (cover) {
+                    <img [src]=`featuredGenreData.covers[%index]`>
+                }
+                @else {
+                    <div class="image-placeholder"></div>
+                }
+            }
+        </div>
+    </div>
+</div>
