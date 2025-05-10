@@ -1,26 +1,31 @@
 <div class="top-container">
-    <strong> Site Settings </strong> <br>
     <div class="main">
-        <div class="setting-right">
-            <b> Reset Password </b>
-            <form>
+        <h3> Site Settings </h3> <br>
+        <div class="password-container">
+            <h4> Reset Password </h4>
+            <form (ngSubmit)="onSetPassword()" [formGroup]="passwordForm">
+                <!-- old password -->
                 <label for="oldPassword">Old Password</label>
-                <input type="text" name="txt"> <br>
+                <input type="text" name="txt" formControlName = "oldPassword" class="form-control" [(ngModel)]="newPasswordObj.oldPassword"> <br>
+                <!-- new password -->
                 <label for="newPassword">New Password</label>
-                <input type="text" name="txt"> <br>
+                <input type="text" name="txt" formControlName="newPassword" class="form-control" [(ngModel)]="newPasswordObj.newPassword"> <br>
+                <!-- confirm password -->
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="text" name="txt"> <br>
-                <button (click)="onSetPassword()">Submit</button>
+                <input type="text" name="txt" formControlName="confirmPassword" class="form-control" [(ngModel)]="newPasswordObj.confirmPassword"> <br>
+                <!-- submit button -->
+                <input type="submit" value="submit" [disabled]="passwordForm.invalid">
             </form>
         </div>
-        <div class="setting-left">
-            <b> Other Settings </b> <br>
+        <br>
+        <div class="other-setting-container">
+            <h4> Other Settings </h4> <br> <br>
             <input type="checkbox" id="notification" onChange="toggleNotifi()">
-            <label for="setNotification">Enable Notification</label> <br>
+            <label for="setNotification">Enable Notification</label> <br> <br>
             <input type="checkbox" id="ExploitContent" onChange="toggleExpContent()">
-            <label for="setExploitContent">Allow Exploit Content</label> <br>
+            <label for="setExploitContent">Allow Exploit Content</label> <br> <br>
             <input type="checkbox" id="ContrastMode" onChange="toggleContraMode()">
-            <label for="setConstrastMode">High Contrast Mode</label> <br>
+            <label for="setConstrastMode">High Contrast Mode</label> <br> <br>
         </div>
     </div>
 </div>

@@ -1,42 +1,46 @@
 <div class="top-container">
   <div class="main">
-      <div class="help-left">
-        <div class="term-container">
+    <h3> Help </h3> <br>
+    <div class="help-left">
+      <div class="term-container">
+        <br>
+        <h4> Terms of Services </h4> <br>
+        <h5> 1. Don't bully other users  </h5>
+        <h6> Because that's not right </h6>
+        <h5> 2. Game Review </h5>
+        <h6> Keep reviews & discussion focused on games themselves, whenever possible </h6>
+        <h5> 3. Enjoy </h5>
+        <h6> Have fun, and happy rating... </h6> <br>
+      </div>
+    </div>
+    <br>
+    <div class="help-right">
+      <div class="feedback-container">
+        <form (ngSubmit)="onSubmit()" [formGroup]="feedbackForm">
+          <p><strong>Feedback? Concerns? Connect Us</strong></p>
+          <!-- Email input-->
+          <input type="text" id="frame" formControlName="email" placeholder="Enter email" class="form-control" [(ngModel)]="feedbackObj.email">
           <br>
-          <h3> Terms of Services </h3> 
-          <h4> 1. Don't bully other users, because that's not right </h4>
-          <h4> 2. Keep reviews & discussion focused on games themselves, whenever possible </h4>
-          <h4> 3. Have fun, and happy rating... </h4> <br>
+          <!-- Corresponse Selection-->
+          <select formControlName="corresponse" id="corTypes" required  class="form-control" [(ngModel)]="feedbackObj.type">
+            <option value="" disabled selected>Type of Correspondence</option>
+            <option value="technical">Technical Issue</option>
+            <option value="feedback">Feedback</option>
+            <option value="concern">Concern</option>
+          </select>
+          <br>
+          <!-- Description input-->
+          <textarea id="description" rows="4" cols="40" formControlName="description" placeholder="What's going on?"  class="form-control" [(ngModel)]="feedbackObj.description">
+          </textarea><br>
+          <!-- Submit Button-->
+          <input type="submit" value="submit" [disabled]="feedbackForm.invalid">
+        </form>
+    
+        <!-- Success Message -->
+        <div *ngIf="formSubmitted" class="success-message">
+          Form submitted successfully!
         </div>
       </div>
-      <br>
-        <div class="help-right">
-          <div class="feedback-container">
-            <form (ngSubmit)="onSubmit()" [formGroup]="feedbackForm">
-              <p><strong>Feedback? Concerns? Connect Us</strong></p>
-              <!-- Email input-->
-              <input type="text" id="frame" formControlName="email" placeholder="Enter email" class="form-control" [(ngModel)]="feedbackObj.email">
-              <br>
-              <!-- Corresponse Selection-->
-              <select formControlName="corresponse" id="corTypes" required  class="form-control" [(ngModel)]="feedbackObj.type">
-                <option value="" disabled selected>Type of Correspondence</option>
-                <option value="technical">Technical Issue</option>
-                <option value="feedback">Feedback</option>
-                <option value="concern">Concern</option>
-              </select>
-              <br><br>
-              <!-- Description input-->
-              <textarea id="description" rows="4" cols="40" formControlName="description" placeholder="What's going on?"  class="form-control" [(ngModel)]="feedbackObj.description">
-              </textarea><br> <br>
-              <!-- Submit Button-->
-              <input type="submit" value="Submit" [disabled]="feedbackForm.invalid">
-            </form>
-        
-            <!-- Success Message -->
-            <div *ngIf="formSubmitted" class="success-message">
-              Form submitted successfully!
-            </div>
-          </div>
-        </div>
+    </div>
   </div>
 </div>

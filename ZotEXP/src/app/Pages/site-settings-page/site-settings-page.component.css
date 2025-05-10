@@ -4,38 +4,40 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: black;
+    text-align: center;
+    max-width: 650px;
+    margin: auto
   }
 
 .main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; 
-    padding: 20px; 
-    font-family: Arial, sans-serif; 
-    background-color: #f9f9f9; 
-    border: 1px solid #ddd; 
+    background-color: #737171;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
 }
 
-.top-container strong {
+.main h3 {
     margin: 8px 0;
     color: black; 
     line-height: 1.5; 
 }
 
-.setting-left b {
-    margin-right: 50px;
+.password-container {
+    border: 1px solid #353434;
+    background-color: #5e5d5d;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.password-container h4 {
     color: black;
-    font-size: 1.2em; 
 }
 
 /* Password inputs */ 
-.setting-left input[type="text"],
-.setting-left select {
-    width: 100%;
-    padding: 10px;
+.password-container input[type="text"],
+.password-container select {
     margin-top: 8px; 
     border: 1px solid #ccc;
     border-radius: 4px; 
@@ -44,35 +46,50 @@
     color: black; 
 }
 
-.setting-left label {
-    margin-right: 50px;
+.password-container label {
     color: black;
-    font-size: 1.2em; 
+    font-size: 1.2em;
+    margin-right: 25px;
 }
 
-.setting-left input[type="submit"] {
-    margin-top: 10px; 
-    padding: 10px 20px; 
-    font-size: 1em; 
-    background-color: #007bff; 
-    border: none; 
+/* Submit button */
+.password-container input[type="submit"] {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .password-container input[type="submit"]:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+  }
+
+.other-setting-container { 
+    border: 1px solid #353434;
+    background-color: #5e5d5d;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.other-setting-container h4 {
+    color: black;
+}
+
+.other-stting-container label {
+    color: black;
+    font-size: 1.2em;
+    margin-right: 25px;
+}
+
+.other-setting-container input[type="checkbox"],
+.other-setting-container select {
+    margin-top: 8px; 
+    border: 1px solid #ccc;
     border-radius: 4px; 
-    cursor: pointer; 
-}
-
-.setting-left input[type="submit"]:disabled {
-    background-color: #a0a0a0; 
-    cursor: not-allowed; 
-}
-
-.setting-right b {
-    margin-right: 50px;
-    color: black;
-    font-size: 1.2em; 
-}
-
-.setting-right label {
-    margin-right: 50px;
-    color: black;
-    font-size: 1.2em; 
+    box-sizing: border-box;
+    font-size: 1em; 
 }

@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-site-settings-page',
-  imports: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './site-settings-page.component.html',
   styleUrl: './site-settings-page.component.css'
 })
@@ -11,15 +17,27 @@ export class SiteSettingsPageComponent {
   expContent:boolean = false; 
   contraMode:boolean = false; 
   errorPassword:boolean = false; 
+  formSubmitted: boolean = false; 
   signupUsers:any [] = []; 
+  passwordForm: FormGroup;
   newPasswordObj:any = {
     oldPassword: '',
     newPassword: '',
     confirmPassword: ''
   };
-  constructor() { } 
+  constructor(private userInput: FormBuilder) {
+    this.passwordForm = userInput.group({
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    });
+   } 
 
   onSetPassword(){
+    if (!this.passwordForm.valid){
+      return;
+    }
+    this.formSubmitted = true;
     if (this.errorPassword) {
       this.errorPassword = false; 
     }
@@ -33,7 +51,6 @@ export class SiteSettingsPageComponent {
       this.errorPassword = true; 
       return 
     }
-    
 
     if (this.newPasswordObj.newPassword != this.newPasswordObj.confirmPassword){
       this.errorPassword = true; 

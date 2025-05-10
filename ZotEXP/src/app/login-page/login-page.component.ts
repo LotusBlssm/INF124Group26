@@ -39,6 +39,11 @@ export class LoginPageComponent {
     let localData = localStorage.getItem("signupUsers");
     this.signupUsers = localData ? JSON.parse(localData) : []; 
 
+    if (this.signupObj.password.length < 8){
+      alert("Password < 8");
+      return;
+    }
+
     if (this.signupObj.password != this.signupObj.passwordCheck){
       alert("Passwords do not match!");
       return; 
