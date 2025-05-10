@@ -55,6 +55,12 @@ app-game-tag, app-user-tag {
     align-items: center;
 }
 
+.add-review-dialogue-container {
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+}
+
 .reviews {
     display: grid;
     grid-template-columns: 1fr 1fr;

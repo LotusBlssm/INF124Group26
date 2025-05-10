@@ -60,6 +60,17 @@
 
 <hr>
 
+<!-- Form to add a new review for signed in users (we'll need that check w/ the backend later) -->
+<div class="add-review-dialogue-container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="userReviewForm">
+        <p>What do <strong>you</strong> think about {{gameData.title}}?</p>
+        <textarea id="userReviewText" rows="3" formControlName="userReviewText" placeholder="What are your thoughts?"  class="form-control" [(ngModel)]="userReviewObj.description" style="margin-right: 2rem;"></textarea>
+        <input type="submit" value="Submit Review" [disabled]="userReviewForm.invalid" style="margin-top: 0.5rem;">
+    </form>
+</div>
+
+<hr>
+
 <div class="reviews">
     @for (review of reviews; track review; let index = $index) {
         <app-review [reviewData]="review"></app-review>

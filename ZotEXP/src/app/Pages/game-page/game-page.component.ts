@@ -2,10 +2,16 @@ import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GameTagComponent } from '../../game-tag/game-tag.component';
 import { UserTagComponent } from '../../user-tag/user-tag.component';
 import { ReviewComponent } from '../../review/review.component';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-game-page',
-  imports: [GameTagComponent, UserTagComponent, ReviewComponent],
+  imports: [
+    GameTagComponent, 
+    UserTagComponent, 
+    ReviewComponent, 
+    ReactiveFormsModule
+    ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -16,14 +22,30 @@ export class GamePageComponent {
     image: undefined,
     company: "Company",
     releaseDate: new Date(1999, 8, 22),
-    description: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+    description: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
     rating: Math.random() * 5,
     gameTags: ["Multiplayer", "Controller Friendly", "Microtransactions", "Co-Op", "Mod Supported", "Fun with Friends"],
     userTags: ["Teamwork Heavy", "Not for Noobs", "Mod Supported", "Replayable", "Friendly Community"]
   }
   reviews:any = this.getReviews()
 
-  getReviews () { // will change when backend is made 
+  // User's review form construction
+  userReview: any [] = []; 
+  userReviewForm:FormGroup;
+  formSubmitted:boolean = false;
+  userReviewObj:any = {
+    userReviewText: ''
+  };
+  constructor(private userInput: FormBuilder) {
+    this.userReviewForm = userInput.group({
+      userReviewText: ['', Validators.required]
+    });
+  }
+  
+
+  // Displayed reviews collection
+  getReviews () { 
+    // will change when backend is made 
     function randomDate(start: Date, end: Date) {
       return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     }
@@ -41,5 +63,19 @@ export class GamePageComponent {
     }
     console.log(reviews);
     return reviews;
+  }
+
+  onSubmit() {
+    if (this.userReviewForm.valid){
+      this.formSubmitted = true; 
+      let localData = localStorage.getItem("Feedback"); 
+      this.userReview.push(
+        this.userReviewForm
+      );
+      // default setting 
+      this.userReviewObj = {
+        userReviewText: ''
+      };
+    }
   }
 }
