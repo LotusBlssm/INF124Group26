@@ -1,0 +1,48 @@
+#profileContainer {
+    max-width: 100%;
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /*horizonal alignment */
+    align-items: center;  /* vertical alignment */
+    gap: 20px;
+    padding-top: 50px;
+    position: relative;
+}
+
+#profileImage {
+    width: 150px;
+    height: 150px;
+}
+
+#usernameContainer {
+    gap: 20px;
+}
+
+#username {
+    font-size: 24px; 
+    margin: 0; /* Remove default margin */
+}
+
+#dateJoined {
+    font-size: 18px;
+    font-style: italic;
+}
+
+#editProfileButton {
+    color: black;
+    background-color: light-gray;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position:absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#activityContainer {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 20px;
+}

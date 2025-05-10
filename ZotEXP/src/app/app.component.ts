@@ -8,7 +8,7 @@ import { GamePageComponent } from "./Pages/game-page/game-page.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderBarComponent, MatIconModule, SearchResultsPageComponent, GamePageComponent],
+  imports: [RouterOutlet, HeaderBarComponent, MatIconModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
