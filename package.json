@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "angular-star-rating": "^7.0.0"
-  }
+    "angular-star-rating": "^7.0.0",
+    "express": "^5.1.0"
+  },
+  "type": "module"
 }

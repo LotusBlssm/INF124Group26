@@ -1,4 +1,4 @@
-import { ReviewComponent } from "../../review/review.component";
+import { Review } from "../review/review";
 
 export class User {
     userId: number = 0;
@@ -13,7 +13,7 @@ export class User {
     biography: string = "DEFAULT_BIOGRAPHY";
     dateJoined: Date = new Date();
 
-    reviews: ReviewComponent[] = [];
+    reviews: Review[] = [];
 
     profileImage: string = "images/blankProfilePicture.jpg";
     // userProfileImage is a string that contains the path to the default profile image. 
