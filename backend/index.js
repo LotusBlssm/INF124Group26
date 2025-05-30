@@ -28,7 +28,7 @@ app.put('/api/reviews/:id', (req, res) => {
 });
 
 app.get('/api/game/:id', (req, res) => {
-	//TODO: fetch the game info from igdb 
+	//TODO: fetch the game info from igdb AND fetch our reviews for the game
 
 });
 
