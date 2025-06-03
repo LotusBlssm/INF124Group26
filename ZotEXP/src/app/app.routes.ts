@@ -28,11 +28,11 @@ export const routes: Routes = [
         component: SiteSettingsPageComponent
     }, 
     {
-        path: 'search-results',
+        path: 'search',
         component: SearchResultsPageComponent
     },
     {
-        path: 'game-page',
+        path: 'game/:id',
         component: GamePageComponent
     }
 ];

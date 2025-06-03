@@ -5,7 +5,7 @@
     </div>
 
     <div class="search-bar">
-        <input type="text" placeholder="Search for a game..." class="search-input" />
+        <input [(ngModel)]="query" (keypress)="onKeyPress($event)" type="text" placeholder="Search for a game..." class="search-input" />
     </div>
 
     <div class="header-icons-right">
