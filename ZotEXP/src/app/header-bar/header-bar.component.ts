@@ -20,7 +20,6 @@ export class HeaderBarComponent {
   }
 
   search() {
-    console.log("searching with query " + this.query);
     this.router.navigate(['/search'], { queryParams: { query: encodeURIComponent(this.query) } });
   }
 
