@@ -1,10 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
 
-import express from "express"
-const app = express();
-const port = 3000;
-
 const AWS = require('aws-sdk');
 AWS_ACCESS_KEY_ID='';
 AWS_SECRET_ACCESS_KEY='';
@@ -16,6 +12,15 @@ AWS.config.update({
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 module.exports = dynamodb;
+
+const listTables = async () => {
+  try {
+    const data = await client.send(new ListTablesCommand({}));
+    console.log("✅ DynamoDB connection OK. Tables:", data.TableNames);
+  } catch (err) {
+    console.error("❌ Error connecting to DynamoDB:", err.message);
+  }
+};
 
 // app.get('/user/:id', async (req, res) => {
 //   const userID = req.params.id; 
