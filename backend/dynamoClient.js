@@ -16,9 +16,9 @@ module.exports = dynamodb;
 const listTables = async () => {
   try {
     const data = await client.send(new ListTablesCommand({}));
-    console.log("✅ DynamoDB connection OK. Tables:", data.TableNames);
+    console.log("DynamoDB connection OK. Tables:", data.TableNames);
   } catch (err) {
-    console.error("❌ Error connecting to DynamoDB:", err.message);
+    console.error("Error connecting to DynamoDB:", err.message);
   }
 };
 
@@ -37,7 +37,7 @@ const listTables = async () => {
 //     else {
 //       res.status(404).send('User Not Found'); 
 //     }
-//   } catch (err) {å
+//   } catch (err) {
 //     console.error(err); 
 //     res.status(500).send("Error Fetching User"); 
 

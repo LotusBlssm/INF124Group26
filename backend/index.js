@@ -35,3 +35,47 @@ app.get('/api/game/:id', (req, res) => {
 app.listen(port, ()=>{
 	console.log(`Server is running on port ${port}.`);
 });
+
+
+// User Accounts 
+app.get('/user/:id', async (req, res) => {
+  const userID = req.params.id; // user must have their unique ID
+  
+  try {
+    const data = await dynamodb.send(new GetCommand({
+      TableName : 'Users', 
+      Key  : { id: userID }
+    }));
+
+    if (data.Item) {
+      res.json(data.Item); 
+    }
+    else {
+      res.status(404).send('User Not Found'); 
+    }
+  } catch (err) {
+    console.error(err); 
+    res.status(500).send("Error Fetching User"); 
+
+  }});
+
+  
+app.get('/review/:id', async (req, res) => {
+	const reviewID = req.params.id; 
+
+	try {
+		const data = await dynamodb.send(new GetCommand({
+			TableName : 'GameReviews',
+			Key : {id: reviewID}
+		}));
+		if (data.Item) {
+			res.json(data.Item); 
+		}
+		else {
+			res.status(404).send('Review Not Found'); 
+		}
+	} catch (err) {
+		console.error(err); 
+		res.status(500).send("Error Fetching User"); 
+	}
+  });
