@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.825.0",
     "angular-star-rating": "^7.0.0",
     "express": "^5.1.0"
   },

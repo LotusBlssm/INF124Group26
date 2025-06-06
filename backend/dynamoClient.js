@@ -1,11 +1,6 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
-
 const secret = "..."; // made up the scret password for jwt
 
-const AWS = require('aws-sdk');
-AWS_ACCESS_KEY_ID='';
-AWS_SECRET_ACCESS_KEY='';
+const { AWS, putItem, getItem } = require('aws-sdk');
 
 // AWS.config.update({
 //   region: 'us-east-1', // or your region
@@ -24,14 +19,14 @@ const usersDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
 
 // Reviews DynamoDB
 const reviewsDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-  region: 'us-east-1', // or your region
+  region: 'us-east-2', // or your region
   credential: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   },
 }));
 
-module.exports = { userDynamoDB, reviewsDynamoDB }; 
+module.exports = { usersDynamoDB, reviewsDynamoDB }; 
 
 const listTables = async () => {
   try {
@@ -42,7 +37,24 @@ const listTables = async () => {
   }
 };
 
+async function main() {
+    const putItem = new putItem ({
+        TableName: 'usersTable',
+        Item: {
+            userID: {
+                "N": 1
+            },
+            username: {
+                "S": "ZotEXPTestUser"
+            }
+        }
+    })
 
+    await client.send(putItem);
+}
+
+main()
+    .catch(err => console.log(err))
 
 // SOME WORK RELATED TO DB (login)...
 
