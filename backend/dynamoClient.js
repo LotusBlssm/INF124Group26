@@ -1,6 +1,5 @@
 // INSTRUCTION FOR AWS CONNECTION: 
-// BEFORE USING DYNAMODB, 
-// EXPORT YOUR ACCESS KEY 
+// npm install aws-sdk --save (DON'T PUSH THIS WORK)
 
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';

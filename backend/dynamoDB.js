@@ -1,6 +1,7 @@
 // import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 //import { DynamoDBDocumentClient, PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
 
+// DO NOT PUSH aws-sdk
 const AWS = require('aws-sdk');
 // Delete this key before pushing the work
 
