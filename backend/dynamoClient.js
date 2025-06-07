@@ -9,37 +9,33 @@ const { AWS, putItem, getItem } = require('aws-sdk');
 // });
 
 // Users DynamoDB
-const usersDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-  region: 'us-east-1', // or your region
+const DynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
+  region: 'us-east-2', // Currently we use this time zone for DBs 
   credential: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   },
 }));
 
-// Reviews DynamoDB
-const reviewsDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-  region: 'us-east-2', // or your region
-  credential: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  },
-}));
+// OR Using Update 
+// AWS.config.update({ region: 'us-east-2' }); 
 
-module.exports = { usersDynamoDB, reviewsDynamoDB }; 
+const USER_TABLE = "UserTable"; // User 
+const REVIEW_TABLE = "ReviewTable";  // Game Review 
+const Test_Table = "TestTable"; // Game Info
 
-const listTables = async () => {
-  try {
-    const data = await client.send(new ListTablesCommand({}));
-    console.log("DynamoDB connection OK. Tables:", data.TableNames);
-  } catch (err) {
-    console.error("Error connecting to DynamoDB:", err.message);
-  }
-};
+// const listTables = async () => {
+//   try {
+//     const data = await client.send(new ListTablesCommand({}));
+//     console.log("DynamoDB connection OK. Tables:", data.TableNames);
+//   } catch (err) {
+//     console.error("Error connecting to DynamoDB:", err.message);
+//   }
+// };
 
 async function main() {
     const putItem = new putItem ({
-        TableName: 'usersTable',
+        TableName: USER_TABLE,
         Item: {
             userID: {
                 "N": 1
