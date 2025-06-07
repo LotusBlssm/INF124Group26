@@ -1,5 +1,6 @@
 import express from "express"
 const app = express();
+const {getReview, getReviewById, addOrUpdateReview, deleteReview} = require('./dynamoClient'); 
 const port = 3000;
 
 app.get('/api/user/:id', (req, res) => {
@@ -60,22 +61,64 @@ app.get('/user/:id', async (req, res) => {
   }});
 
   
-app.get('/review/:id', async (req, res) => {
-	const reviewID = req.params.id; 
+// Reviews 
+// get Review 
+  app.get('/reviews', async (req, res) => {
+    try {
+        const review = await getReview(); 
+        res.jsaon(review); 
+    } catch (error) {
+        console.error(err); 
+        res.status(500).json({err: 'review error'});
+    }
+})
 
-	try {
-		const data = await dynamodb.send(new GetCommand({
-			TableName : 'GameReviews',
-			Key : {id: reviewID}
-		}));
-		if (data.Item) {
-			res.json(data.Item); 
-		}
-		else {
-			res.status(404).send('Review Not Found'); 
-		}
-	} catch (err) {
-		console.error(err); 
-		res.status(500).send("Error Fetching User"); 
-	}
-  });
+// get Review by ID 
+app.get('/reviews/:id', async (req, res) => {
+    const id = req.params.id; 
+    try {
+        const review = await getReviewById(id); 
+        res.jsaon(review); 
+    } catch (error) {
+        console.error(err); 
+        res.status(500).json({err: 'review error'});
+    }
+})
+
+
+// add Review 
+app.post('/reviews', async (req, res) => {
+    const review = req.body; 
+    try {
+        const newReview = await addOrUpdateReview(review);
+        res.jsaon(newReview); 
+    } catch (error) {
+        console.error(err); 
+        res.status(500).json({err: 'review error'});
+    }
+})
+
+// update Review 
+app.put('/reviews/:id', async (req, res) => {
+    const review = req.body; 
+    const {id} = req.params; 
+    review.id = id;
+    try {
+        const updatedReview = await addOrUpdateReview(review);
+        res.jsaon(updatedReview); 
+    } catch (error) {
+        console.error(err); 
+        res.status(500).json({err: 'review error'});
+    }
+})
+
+// delete Review
+app.delete('/reviews/:id', async (req, res) =>{
+    const {id} = req.params; 
+    try {
+        res.json(await deleteReview(id)); 
+    } catch (err) {
+        console.error(err); 
+        res.status(500).json({err: "failed to delete"});
+    }
+})
