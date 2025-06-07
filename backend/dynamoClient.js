@@ -1,11 +1,18 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
 
-const secret = "..."; // made up the scret password for jwt
+// I think this is all we need for this file?
+import AWS from 'aws-sdk';
+AWS.config.update({ region: 'us-east-2' });
+export const dynamoClient = new AWS.DynamoDB.DocumentClient(); 
+// EOF
 
-const AWS = require('aws-sdk');
-AWS_ACCESS_KEY_ID='';
-AWS_SECRET_ACCESS_KEY='';
+
+// const secret = "..."; // made up the scret password for jwt
+
+// const AWS = require('aws-sdk');
+// AWS_ACCESS_KEY_ID='';
+// AWS_SECRET_ACCESS_KEY='';
 
 // AWS.config.update({
 //   region: 'us-east-1', // or your region
@@ -13,34 +20,34 @@ AWS_SECRET_ACCESS_KEY='';
 //   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 // });
 
-// Users DynamoDB
-const usersDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-  region: 'us-east-1', // or your region
-  credential: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  },
-}));
+// // Users DynamoDB
+// const usersDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
+//   region: 'us-east-1', // or your region
+//   credential: {
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+//   },
+// }));
 
-// Reviews DynamoDB
-const reviewsDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-  region: 'us-east-1', // or your region
-  credential: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  },
-}));
+// // Reviews DynamoDB
+// const reviewsDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
+//   region: 'us-east-1', // or your region
+//   credential: {
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+//   },
+// }));
 
-module.exports = { userDynamoDB, reviewsDynamoDB }; 
+// module.exports = { userDynamoDB, reviewsDynamoDB }; 
 
-const listTables = async () => {
-  try {
-    const data = await client.send(new ListTablesCommand({}));
-    console.log("DynamoDB connection OK. Tables:", data.TableNames);
-  } catch (err) {
-    console.error("Error connecting to DynamoDB:", err.message);
-  }
-};
+// const listTables = async () => {
+//   try {
+//     const data = await client.send(new ListTablesCommand({}));
+//     console.log("DynamoDB connection OK. Tables:", data.TableNames);
+//   } catch (err) {
+//     console.error("Error connecting to DynamoDB:", err.message);
+//   }
+// };
 
 
 

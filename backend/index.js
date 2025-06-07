@@ -1,4 +1,6 @@
 import express from "express"
+import { router as gameRouter } from "./routes/gameRoutes.js";
+
 const app = express();
 const port = 3000;
 
@@ -27,15 +29,7 @@ app.put('/api/reviews/:id', (req, res) => {
 
 });
 
-app.get('/api/game/:id', (req, res) => {
-	//TODO: fetch the game info from igdb AND fetch our reviews for the game
-
-});
-
-app.listen(port, ()=>{
-	console.log(`Server is running on port ${port}.`);
-});
-
+app.use('/api/game', gameRouter);
 
 // User Accounts 
 app.get('/user/:id', async (req, res) => {
@@ -79,3 +73,7 @@ app.get('/review/:id', async (req, res) => {
 		res.status(500).send("Error Fetching User"); 
 	}
   });
+
+app.listen(port, ()=>{
+	console.log(`Server is running on port ${port}.`);
+});
