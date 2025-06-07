@@ -1,6 +1,6 @@
 import express from "express"
 const app = express();
-const {getReview, getReviewById, addOrUpdateReview, deleteReview} = require('./dynamoClient'); 
+const {getReview, getReviewById, addOrUpdateReview, deleteReview} = require('./dynamoDB'); 
 const port = 3000;
 
 app.get('/api/user/:id', (req, res) => {
