@@ -1,28 +1,67 @@
-const secret = "..."; // made up the scret password for jwt
+// INSTRUCTION FOR AWS CONNECTION: 
+// BEFORE USING DYNAMODB, 
+// EXPORT YOUR ACCESS KEY 
 
-const { AWS, putItem, getItem } = require('aws-sdk');
+import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
+
+// Delete this key before pushing the work
+
 
 // AWS.config.update({
-//   region: 'us-east-1', // or your region
+//   region: process.env.AWS_DEFAULT_REGION,
 //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-// });
+//   secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
+// }) 
 
-// Users DynamoDB
-const DynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-  region: 'us-east-2', // Currently we use this time zone for DBs 
-  credential: {
+AWS.config.update({ 
+    region: 'us-east-2',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  },
-}));
+    secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
+});
 
-// OR Using Update 
-// AWS.config.update({ region: 'us-east-2' }); 
+const dynamoClient = new AWS.DynamoDB.DocumentClient(); 
+// const USER_TABLE = 'UserTable'; 
+// const REVIEW_TABLE = 'ReviewTable'; 
+const ZOTEXP_TABLE_USER = "ZotEXPTableUser";
+const ZOTEXP_TABLE_REVIEW = "ZotEXPTableReview";
 
-const USER_TABLE = "UserTable"; // User 
-const REVIEW_TABLE = "ReviewTable";  // Game Review 
-const Test_Table = "TestTable"; // Game Info
+// const TEST_TABLE = 'TestTable';  
+
+
+const getUser = async() => {
+    const params = {
+        TableName: ZOTEXP_TABLE_USER
+    };
+    const user = await dynamoClient.scan(params).promise(); 
+    console.log(user);
+    return user;
+};
+
+const addOrUpdateReview = async (review) => {
+  const params = {
+    TableName: ZOTEXP_TABLE_USER,
+    Item: review,
+  };
+  return await dynamoClient.put(params).promise(); 
+}
+
+const addOrUpdateUser = async (user) => {
+    const params = {
+        TableName: ZOTEXP_TABLE_USER,
+        Item: user,
+    };
+    return await dynamoClient.put(params).promise();
+}
+//getUser();
+const user = {
+    "userID" : 123,
+    "username" : "Kenny Kim"
+}
+
+addOrUpdateUser(user);
+getUser(); 
+
 
 // const listTables = async () => {
 //   try {
@@ -33,24 +72,24 @@ const Test_Table = "TestTable"; // Game Info
 //   }
 // };
 
-async function main() {
-    const putItem = new putItem ({
-        TableName: USER_TABLE,
-        Item: {
-            userID: {
-                "N": 1
-            },
-            username: {
-                "S": "ZotEXPTestUser"
-            }
-        }
-    })
+// async function main() {
+//     const putItem = new putItem ({
+//         TableName: USER_TABLE,
+//         Item: {
+//             userID: {
+//                 "N": 1
+//             },
+//             username: {
+//                 "S": "ZotEXPTestUser"
+//             }
+//         }
+//     })
 
-    await client.send(putItem);
-}
+//     await client.send(putItem);
+// }
 
-main()
-    .catch(err => console.log(err))
+// main()
+//     .catch(err => console.log(err))
 
 // SOME WORK RELATED TO DB (login)...
 
