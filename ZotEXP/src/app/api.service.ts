@@ -35,7 +35,7 @@ export class APIService {
     // TODO: Use the API in the backend to update the review specified with the new information passed as the argument
   }
 
-  getGame(gameId: number) {
+  getGame(gameId: any) {
     // TODO: Use the API in the backend to get all data from the specified game in IGDB 
     console.log('API Service gameGame() called.')
     const data = this.http.get(`http://localhost:3000/api/game/${gameId}`);

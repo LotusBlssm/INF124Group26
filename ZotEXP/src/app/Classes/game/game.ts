@@ -1,6 +1,7 @@
 import { Review } from "../review/review";
 
 export class Game {
+    id: string = '';
     title: string = '';
     imageURL: string = '';
     company: string = '';

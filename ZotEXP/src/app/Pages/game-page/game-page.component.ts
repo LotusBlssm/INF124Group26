@@ -30,7 +30,7 @@ export class GamePageComponent implements OnInit {
 
   // Necessary to load gameData
   get id() {
-    return Number(this.route.snapshot.paramMap.get('id'));
+    return this.route.snapshot.paramMap.get('id');
   }
 
   constructor(private userInput: FormBuilder, private route: ActivatedRoute, private apiService: APIService) {
