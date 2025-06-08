@@ -1,7 +1,6 @@
 // INSTRUCTION FOR AWS CONNECTION: 
 // npm install aws-sdk --save (DON'T PUSH THIS WORK)
 
-<<<<<<< HEAD
 // I think this is all we need for this file?
 import AWS from 'aws-sdk';
 AWS.config.update({ region: 'us-east-2' });
@@ -13,14 +12,13 @@ export const dynamoClient = new AWS.DynamoDB.DocumentClient();
 
 // const AWS = require('aws-sdk');
 // AWS_ACCESS_KEY_ID='';
-// AWS_SECRET_ACCESS_KEY='';
-=======
-import AWS from 'aws-sdk';
-import dotenv from 'dotenv';
+// // AWS_SECRET_ACCESS_KEY='';
+// import AWS from 'aws-sdk';
+// import dotenv from 'dotenv';
+
 
 // Delete this key before pushing the work
 
->>>>>>> dynamoDB-work
 
 // AWS.config.update({
 //   region: process.env.AWS_DEFAULT_REGION,
@@ -28,7 +26,6 @@ import dotenv from 'dotenv';
 //   secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
 // }) 
 
-<<<<<<< HEAD
 // // Users DynamoDB
 // const usersDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
 //   region: 'us-east-1', // or your region
@@ -57,7 +54,6 @@ import dotenv from 'dotenv';
 //     console.error("Error connecting to DynamoDB:", err.message);
 //   }
 // };
-=======
 AWS.config.update({ 
     region: 'us-east-2',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -81,7 +77,6 @@ const getUser = async() => {
     console.log(user);
     return user;
 };
->>>>>>> dynamoDB-work
 
 const addOrUpdateReview = async (review) => {
   const params = {

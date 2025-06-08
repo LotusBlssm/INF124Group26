@@ -1,8 +1,13 @@
-const express = requires('express'); 
-const { getUsers } = requires('./controllers/userControllers'); 
+import express from 'express';
+import * as gameController from '../controllers/userController.js';
 
-const router = express.Router(); 
+const router = express.Router();
 
-router.get('./users', getUsers); 
+router.get('/:id', userController.getUser);
+router.post('/:id', userController.addUser);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
 
-module.exports = router;
+
+export { router };
+

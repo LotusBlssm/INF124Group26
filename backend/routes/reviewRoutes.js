@@ -3,6 +3,9 @@ const { getReviews } = requires('./controllers/reviewControllers');
 
 const router = express.Router(); 
 
-router.get('./reviews', getReviews); 
+router.get('/:id', reviewController.getReview);
+router.post(':id', reviewController.addReview); 
+router.put(':/id', reviewController.updateReview); 
+router.delete(':/id', reviewController.deleteReview);
 
 module.exports = router;
