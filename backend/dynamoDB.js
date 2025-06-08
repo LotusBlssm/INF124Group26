@@ -18,6 +18,44 @@ const REVIEW_TABLE = 'ReviewTable';
 // const TEST_TABLE = 'TestTable'; 
 
 
+// USER FUNCTIONS 
+const getUser = async() => {
+    const params = {
+        TableName: USER_TABLE
+    };
+    const review = await dynamoClient.scan(params).promise(); 
+    console.log(review);
+    return review;
+};
+
+const getUserById = async (id) => {
+  const params = {
+    TableName: USER_NAME,
+    Key: {
+      id
+    }
+  };
+  return await dynamoClient.get(params).promise();
+}
+
+const addOrUpdateUser = async (user) => {
+  const params = {
+    TableName: USER_TABLE, 
+    Item: user,
+  };
+  return await dynamoClient.put(params).promise(); 
+}
+
+const deleteUser = async (user) => {
+  const params = {
+    TableName: USER_TABLE,
+    Item: user
+  };
+  return await dynamoClient.delete(params).promise(); 
+}
+
+
+// REVIEW FUNCTIONS 
 const getReview = async() => {
     const params = {
         TableName: REVIEW_TABLE
@@ -53,7 +91,16 @@ const deleteReview = async (review) => {
   return await dynamoClient.delete(params).promise(); 
 }
 
+
+
 module.exports = {
+  // user functions:
+  getUser,
+  getUserById,
+  addOrUpdateUser,
+  deleteUser,
+  
+  // game review functions: 
   getReview, 
   getReviewById,
   addOrUpdateReview, 
