@@ -1,8 +1,14 @@
 import express from "express"
 import { router as gameRouter } from "./routes/gameRoutes.js";
+import { router as searchRouter } from "./routes/searchRoutes.js"
+import cors from "cors";
 
 const app = express();
 const port = 3000;
+
+app.use(cors({
+	origin: 'http://localhost:4200'
+}));
 
 app.get('/api/user/:id', (req, res) => {
     //TODO: fetch our database and send the user data 
@@ -30,6 +36,8 @@ app.put('/api/reviews/:id', (req, res) => {
 });
 
 app.use('/api/game', gameRouter);
+
+app.use('/api/search', searchRouter);
 
 // User Accounts 
 app.get('/user/:id', async (req, res) => {

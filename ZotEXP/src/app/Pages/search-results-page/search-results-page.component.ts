@@ -3,6 +3,7 @@ import { SearchResultComponent } from '../../search-result/search-result.compone
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { APIService } from '../../api.service';
 
 
 @Component({
@@ -29,8 +30,8 @@ export class SearchResultsPageComponent implements OnInit {
     }
   ]
 
-  allSearchResults = [];
-  filteredSortedResults = []; // may bug if getSearchResults is async
+  allSearchResults:any = [];
+  filteredSortedResults:any = []; // may bug if getSearchResults is async
   currentPage = 1;
   sortForm = new FormGroup({
     sortBy: new FormControl(1)
@@ -43,7 +44,7 @@ export class SearchResultsPageComponent implements OnInit {
     return null;
   }
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private apiService: APIService) {}
 
   ngOnInit() {
     // Retreiving search results
@@ -63,13 +64,19 @@ export class SearchResultsPageComponent implements OnInit {
   }
 
   loadSearchResults() {
-    this.allSearchResults = this.getSearchResults();
+    this.getSearchResults();
     this.sortSearchResults();
   }
   
   getSearchResults() {
     let searchResults:any = [];
     // TODO: ACTUALLY GET THE DATABASE LSK:DJFSLFDSJFL
+    console.log('Loading Search Result Data from component...')
+    this.apiService.getSearchResults(this.query).subscribe(data => {
+      console.log('Component received data: ' + data);
+      console.log(data);
+      this.allSearchResults = data;
+    });
     
     return searchResults;
 

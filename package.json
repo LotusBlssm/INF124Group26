@@ -4,6 +4,7 @@
     "@aws-sdk/lib-dynamodb": "^3.826.0",
     "angular-star-rating": "^7.0.0",
     "aws-sdk": "^2.1692.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0"
   },
   "type": "module"

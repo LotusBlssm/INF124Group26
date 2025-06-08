@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from './Classes/user/user';
 import { Review } from './Classes/review/review';
 import { Game } from './Classes/game/game';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,13 @@ export class APIService {
     console.log('API Service gameGame() called.')
     const data = this.http.get(`http://localhost:3000/api/game/${gameId}`);
     console.log('API Service received data: ' + data);
+    return data;
+  }
+
+  getSearchResults(query: any) {
+    console.log(`API Service getSearchResults(${query}) called`);
+    const params = new HttpParams().set('query', query);
+    const data = this.http.get('http://localhost:3000/api/search', { params });
     return data;
   }
 }
