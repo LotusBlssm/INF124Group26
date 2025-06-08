@@ -2,7 +2,7 @@ import { Component, Input, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core'
 import { GameTagComponent } from '../../game-tag/game-tag.component';
 import { UserTagComponent } from '../../user-tag/user-tag.component';
 import { ReviewComponent } from '../../review/review.component';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from '../../api.service';
 
@@ -12,7 +12,8 @@ import { APIService } from '../../api.service';
     GameTagComponent, 
     UserTagComponent, 
     ReviewComponent, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
     ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.css',
@@ -20,24 +21,18 @@ import { APIService } from '../../api.service';
 })
 export class GamePageComponent implements OnInit {
   gameData:any;
-  // User's review form construction
-  userReview: any [] = []; 
-  userReviewForm:FormGroup;
-  formSubmitted:boolean = false;
-  userReviewObj:any = {
-    userReviewText: ''
-  };
+  reviewForm = new FormGroup({
+    rating: new FormControl(0, [Validators.required, this.ratingValidator]),
+    description: new FormControl(''),
+    userTags: new FormControl<any>([]),
+  });
 
   // Necessary to load gameData
   get id() {
     return this.route.snapshot.paramMap.get('id');
   }
 
-  constructor(private userInput: FormBuilder, private route: ActivatedRoute, private apiService: APIService) {
-    this.userReviewForm = userInput.group({
-      userReviewText: ['', Validators.required]
-    });
-
+  constructor(private route: ActivatedRoute, private apiService: APIService) {
     console.log(this.id);
   }
 
@@ -47,25 +42,30 @@ export class GamePageComponent implements OnInit {
 
   loadGameData() {
     // TODO: load game data (from our database, or igdb if needed)
-    console.log('Loading Game Data from component...')
-    this.apiService.getGame(this.id).subscribe(data => {
-      console.log('Component received data: ' + data);
-      console.log(data);
-      this.gameData = data;
-    });
+    
   }
 
   onSubmit() {
-    if (this.userReviewForm.valid) {
-      this.formSubmitted = true; 
-      let localData = localStorage.getItem("Feedback"); 
-      this.userReview.push(
-        this.userReviewForm
-      );
-      // default setting 
-      this.userReviewObj = {
-        userReviewText: ''
-      };
+    // TODO: add the review to our database (will need to get user id, but the rest (review_id, date_created, game_id) shouldn't be hard)
+
+
+
+    // reset form (should be done last in this function)
+    this.reviewForm.reset();
+    (document.getElementById('userReviewTags')! as HTMLTextAreaElement).value = '';
+    this.reviewForm.get('rating')?.setValue(0);
+  }
+
+  ratingValidator(control: AbstractControl): ValidationErrors | null {
+    const rating = control.value;
+    if (rating == null || rating < 1 || rating > 5) {
+      return { outOfRange: {min: 1, max: 5} };
     }
+    return null;
+  }
+
+  onTextareaChange(event: Event) {
+    // Converts the text the user inputted in the tags section into a list of strings (delimited by whitespace)
+    this.reviewForm.controls.userTags.setValue((event.target as HTMLTextAreaElement).value.split(/\s+/));
   }
 }

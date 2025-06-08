@@ -5,13 +5,15 @@ export class Review {
     rating: number = 0;
     description: string = ''; 
     created_at: Date = new Date();
+    user_tags: string[] = []
 
-    constructor(review_id: number, user_id: number, game_id: number, rating: number, description: string, created_at: Date) {
+    constructor(review_id: number, user_id: number, game_id: number, rating: number, description: string, created_at: Date, user_tags: string[]) {
         this.review_id = review_id;
         this.user_id = user_id;
         this.game_id = game_id;
         this.rating = rating;
         this.description = description; 
         this.created_at = created_at; 
+        this.user_tags = user_tags;
     }
 }
