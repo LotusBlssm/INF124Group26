@@ -60,7 +60,7 @@ AWS.config.update({
     secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
 });
 
-const dynamoClient = new AWS.DynamoDB.DocumentClient(); 
+// const dynamoClient = new AWS.DynamoDB.DocumentClient(); 
 // const USER_TABLE = 'UserTable'; 
 // const REVIEW_TABLE = 'ReviewTable'; 
 const ZOTEXP_TABLE_USER = "ZotEXPTableUser";
