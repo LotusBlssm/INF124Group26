@@ -8,15 +8,11 @@ const {getReview, getReviewById, addOrUpdateReview, deleteReview, getUser, getUs
 } = require('./dynamoDB'); 
 const port = 3000;
 
-<<<<<<< HEAD
 app.use(cors({
 	origin: 'http://localhost:4200'
 }));
 
-app.get('/api/user/:id', (req, res) => {
-=======
 app.get('/api/user/:id', async (req, res) => {
->>>>>>> dynamoDB-work
     //TODO: fetch our database and send the user data 
     const id = req.params.id; 
     try {
@@ -63,24 +59,24 @@ app.get('/api/reviews/:id', async (req, res) => {
     const id = req.params.id; 
     try {
         const review = await getReviewById(id); 
-        res.jsaon(review); 
+        res.json(review); 
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'error: failed to get review'});
+        res.status(500).json({err: 'error in existing-review GET request'});
     }
     
 });
 
 // add new review
-app.post('/api/revies/:id', async (req, res) =>{
-    //TODO: add  new review 
+app.post('/api/reviews/:id', async (req, res) =>{
+    //TODO: add new review 
     const review = req.body; 
     try {
         const newReview = await addOrUpdateReview(review);
-        res.jsaon(newReview); 
+        res.json(newReview); 
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'review error'});
+        res.status(500).json({err: 'error in new-review POST request'});
     }
 })
 
@@ -98,7 +94,6 @@ app.put('/api/reviews/:id',  async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 app.use('/api/game', gameRouter);
 
 app.use('/api/search', searchRouter);
@@ -146,10 +141,6 @@ app.get('/review/:id', async (req, res) => {
 	}
   });
 
-app.listen(port, ()=>{
-	console.log(`Server is running on port ${port}.`);
-});
-=======
 // delete Review
 app.delete('/api/reviews/:id', async (req, res) =>{
     //TODO: delete the game review
@@ -162,13 +153,7 @@ app.delete('/api/reviews/:id', async (req, res) =>{
     }
 })
 
-app.get('/api/game/:id', (req, res) => {
-	//TODO: fetch the game info from igdb AND fetch our reviews for the game
-
-});
-
 app.listen(port, ()=>{
 	console.log(`Server is running on port ${port}.`);
 });
 
->>>>>>> dynamoDB-work
