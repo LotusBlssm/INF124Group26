@@ -7,6 +7,11 @@ AWS.config.update({ region: 'us-east-2' });
 export const dynamoClient = new AWS.DynamoDB.DocumentClient(); 
 // EOF
 
+AWS.config.update({ 
+    region: 'us-east-2',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
+});
 
 // const secret = "..."; // made up the scret password for jwt
 
@@ -17,170 +22,94 @@ export const dynamoClient = new AWS.DynamoDB.DocumentClient();
 // import dotenv from 'dotenv';
 
 
-// Delete this key before pushing the work
-
-
-// AWS.config.update({
-//   region: process.env.AWS_DEFAULT_REGION,
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
-// }) 
-
-// // Users DynamoDB
-// const usersDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-//   region: 'us-east-1', // or your region
-//   credential: {
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-//   },
-// }));
-
-// // Reviews DynamoDB
-// const reviewsDynamoDB = new AWS.DynamoDBDocumentClient.from(new DynamoDBclient({
-//   region: 'us-east-1', // or your region
-//   credential: {
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-//   },
-// }));
-
-// module.exports = { userDynamoDB, reviewsDynamoDB }; 
-
-// const listTables = async () => {
-//   try {
-//     const data = await client.send(new ListTablesCommand({}));
-//     console.log("DynamoDB connection OK. Tables:", data.TableNames);
-//   } catch (err) {
-//     console.error("Error connecting to DynamoDB:", err.message);
-//   }
-// };
-AWS.config.update({ 
-    region: 'us-east-2',
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
-});
-
-// const dynamoClient = new AWS.DynamoDB.DocumentClient(); 
-// const USER_TABLE = 'UserTable'; 
-// const REVIEW_TABLE = 'ReviewTable'; 
-const ZOTEXP_TABLE_USER = "ZotEXPTableUser";
-const ZOTEXP_TABLE_REVIEW = "ZotEXPTableReview";
-
-// const TEST_TABLE = 'TestTable';  
-
-
+// USER FUNCTIONS 
 const getUser = async() => {
     const params = {
-        TableName: ZOTEXP_TABLE_USER
+        TableName: USER_TABLE
     };
-    const user = await dynamoClient.scan(params).promise(); 
-    console.log(user);
-    return user;
+    const review = await dynamoClient.scan(params).promise(); 
+    console.log(review);
+    return review;
 };
+
+const getUserById = async (id) => {
+  const params = {
+    TableName: USER_NAME,
+    Key: {
+      id
+    }
+  };
+  return await dynamoClient.get(params).promise();
+}
+
+const addOrUpdateUser = async (user) => {
+  const params = {
+    TableName: USER_TABLE, 
+    Item: user,
+  };
+  return await dynamoClient.put(params).promise(); 
+}
+
+const deleteUser = async (user) => {
+  const params = {
+    TableName: USER_TABLE,
+    Item: user
+  };
+  return await dynamoClient.delete(params).promise(); 
+}
+
+
+// REVIEW FUNCTIONS 
+const getReview = async() => {
+    const params = {
+        TableName: REVIEW_TABLE
+    };
+    const review = await dynamoClient.scan(params).promise(); 
+    console.log(review);
+    return review;
+};
+
+const getReviewById = async (id) => {
+  const params = {
+    TableName: REVIEW_NAME,
+    Key: {
+      id
+    }
+  };
+  return await dynamoClient.get(params).promise();
+}
 
 const addOrUpdateReview = async (review) => {
   const params = {
-    TableName: ZOTEXP_TABLE_USER,
+    TableName: REVIEW_TABLE, 
     Item: review,
   };
   return await dynamoClient.put(params).promise(); 
 }
 
-const addOrUpdateUser = async (user) => {
-    const params = {
-        TableName: ZOTEXP_TABLE_USER,
-        Item: user,
-    };
-    return await dynamoClient.put(params).promise();
-}
-//getUser();
-const user = {
-    "userID" : 123,
-    "username" : "Kenny Kim"
+const deleteReview = async (review) => {
+  const params = {
+    TableName: REVIEW_TABLE,
+    Item: review
+  };
+  return await dynamoClient.delete(params).promise(); 
 }
 
-addOrUpdateUser(user);
-getUser(); 
 
 
-// const listTables = async () => {
-//   try {
-//     const data = await client.send(new ListTablesCommand({}));
-//     console.log("DynamoDB connection OK. Tables:", data.TableNames);
-//   } catch (err) {
-//     console.error("Error connecting to DynamoDB:", err.message);
-//   }
-// };
-
-// async function main() {
-//     const putItem = new putItem ({
-//         TableName: USER_TABLE,
-//         Item: {
-//             userID: {
-//                 "N": 1
-//             },
-//             username: {
-//                 "S": "ZotEXPTestUser"
-//             }
-//         }
-//     })
-
-//     await client.send(putItem);
-// }
-
-// main()
-//     .catch(err => console.log(err))
-
-// SOME WORK RELATED TO DB (login)...
-
-// LOG IN USER
-// const loginUser = async (req, res) => {
-//   const { email, password } = req.body; 
-
-//   AWS.config.update(config.aws_remote_config); 
-//   const docClient = new AWS.DynamoDB.DocumentClient(); 
-
-//   const params = {
-//     TableName: config.aws_table_name, 
-//     Key: { userID } // primary key for Users 
-//   };
-
-//   try {
-//     const data = await docClient.get(params).promise(); 
-//     const user = data.Item; 
-
-//     if (!user) {
-//       return res.status(401).json({ success: false, message: "User not found" });
-//     }
-
-//     const token = jwt.sign({ userID: user.id }, secret, {expiresIn: '1h'})
-
-//     res.josn({ success : true, token }); 
-//   } catch (err) {
-//     console.error("Login error:", err); 
-//     res.status(500).json({ success : false, message : "Internal Server Error" });
-//   }
-// };
-
-
-
-// app.get('/user/:id', async (req, res) => {
-//   const userID = req.params.id; 
+module.exports = {
+  // user functions:
+  getUser,
+  getUserById,
+  addOrUpdateUser,
+  deleteUser,
   
-//   try {
-//     const data = await dynamodb.send(new GetCommand({
-//       TableName : 'Users', 
-//       Key  : { id:UserID }
-//     }));
+  // game review functions: 
+  getReview, 
+  getReviewById,
+  addOrUpdateReview, 
+  deleteReview
+}
 
-//     if (data.Item) {
-//       res.json(data.Item); 
-//     }
-//     else {
-//       res.status(404).send('User Not Found'); 
-//     }
-//   } catch (err) {
-//     console.error(err); 
-//     res.status(500).send("Error Fetching User"); 
 
-//   }});
+

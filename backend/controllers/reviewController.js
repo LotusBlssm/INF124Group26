@@ -1,4 +1,4 @@
-const {getReview, getReviewById, addOrUpdateReview, deleteReview} = require('./dynamoDB'); 
+const {getReview, getReviewById, addOrUpdateReview, deleteReview} = require("../dynamoClient.js"); 
 
 // GET REIVEWS DB
 

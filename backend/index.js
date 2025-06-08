@@ -2,6 +2,7 @@ import express from "express"
 import { router as gameRouter } from "./routes/gameRoutes.js";
 import { router as searchRouter } from "./routes/searchRoutes.js"
 import { router as userRouter } from "./routes/userRoutes.js"
+import { router as reviewRouter } from "./routes/reviewRoutes.js"
 import cors from "cors";
 
 const app = express();

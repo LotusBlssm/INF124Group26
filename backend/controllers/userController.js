@@ -1,6 +1,6 @@
 import { dynamoClient } from "../dynamoClient.js";
 
-const {getUser, getUserById, addOrUpdateUser, deleteUser} = require('./dynamoDB'); 
+const {getUser, getUserById, addOrUpdateUser, deleteUser} = require('../dynamoClient.js'); 
 
 export const getUser =  async (req, res) => {
     //TODO: fetch our database and send the user data 
