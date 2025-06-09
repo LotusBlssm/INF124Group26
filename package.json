@@ -1,20 +1,14 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "@aws-sdk/client-dynamodb": "^3.826.0",
     "@aws-sdk/lib-dynamodb": "^3.826.0",
     "angular-star-rating": "^7.0.0",
     "aws-sdk": "^2.1692.0",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
-=======
-    "@aws-sdk/client-dynamodb": "^3.825.0",
-    "angular-star-rating": "^7.0.0",
-    "aws-sdk": "^2.1692.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "nodemon": "^3.1.10"
->>>>>>> dynamoDB-work
   },
   "type": "module"
 }
