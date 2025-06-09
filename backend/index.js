@@ -3,6 +3,8 @@ import { router as gameRouter } from "./routes/gameRoutes.js";
 import { router as searchRouter } from "./routes/searchRoutes.js"
 import { router as userRouter } from "./routes/userRoutes.js"
 import { router as reviewRouter } from "./routes/reviewRoutes.js"
+import { router as feedbackRouter } from "./routes/feedbackRoutes.js"
+
 import cors from "cors";
 
 const app = express();
@@ -19,6 +21,8 @@ app.use('/api/review', reviewRouter);
 app.use('/api/game', gameRouter);
 
 app.use('/api/search', searchRouter);
+
+app.use('/api/feedback', feedbackRouter);
 
 
 app.listen(port, ()=>{

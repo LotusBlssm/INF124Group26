@@ -21,7 +21,7 @@ export const getUser =  async (req, res) => {
       } catch (err) {
         console.log('500');
         console.error('DynamoDB error:', err);
-        res.status(500).json({ error: 'Could not retrieve game' });
+        res.status(500).json({ error: 'Could not retrieve user in GET request' });
       }
 };
 
@@ -47,7 +47,7 @@ export const addUser = async (req, res) => {
       } catch (err) {
         console.log('500');
         console.error('DynamoDB error:', err);
-        res.status(500).json({ error: 'Could not retrieve game' });
+        res.status(500).json({ error: 'error during addUser POST request' });
       }
   };
 
@@ -62,16 +62,15 @@ export const updateUser = async (req, res) => {
     }
     try {
         const updatedUser = await dynamoClient.get(params).promise();
-        if (!data.Item) {
+        if (!updatedUser.Item) {
             console.log('404');
             return res.status(404).json({ error: 'User not added' });
         }
         console.log('200');
-        res.json(data.Item);
-        res.json(updatedUser); 
+        res.json(updatedUser.Item);
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'review error'});
+        res.status(500).json({err: 'user update error'});
     }
   };
 
@@ -88,6 +87,6 @@ export const deleteUser = async (req, res) =>{
         res.json(await dynamoClient.delete(params).promise()); 
     } catch (err) {
         console.error(err); 
-        res.status(500).json({err: "failed to delete"});
+        res.status(500).json({err: "failed to delete user"});
     }
 };
