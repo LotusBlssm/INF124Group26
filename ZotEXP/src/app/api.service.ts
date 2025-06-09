@@ -29,8 +29,10 @@ export class APIService {
   addReview(review: Review) {
     // TODO: Use the API in the backend to add a new review
     console.log('API Service addReview() called');
-    this.http.post(`http://localhost:3000/api/review`, { review });
-
+    console.log('in service, review is');
+    console.log(review);
+    const data = this.http.post(`http://localhost:3000/api/review`, { review });
+    return data;
   }
 
   updateReview(review: Review) {

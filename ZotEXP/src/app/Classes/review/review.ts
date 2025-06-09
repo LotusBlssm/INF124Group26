@@ -4,10 +4,10 @@ export class Review {
     game_id: any;
     rating: number = 0;
     description: string = ''; 
-    postDate: Date = new Date();
+    postDate: any = new Date();
     user_tags: string[] = []
 
-    constructor(reviewID: any, user_id: any, game_id: any, rating: number, description: string, postDate: Date, user_tags: string[]) {
+    constructor(reviewID: any, user_id: any, game_id: any, rating: number, description: string, postDate: any, user_tags: string[]) {
         this.reviewID = reviewID;
         this.user_id = user_id;
         this.game_id = game_id;

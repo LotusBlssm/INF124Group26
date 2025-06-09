@@ -24,17 +24,19 @@ export const getReview = async (req, res) => {
 
 // add new review
 export const addReview = async (req, res) => {
-    //TODO: add new review 
-    const review = req.body.review; 
+    //TODO: add new review
+    const review = req.body.review;
     const params = {
         TableName: REVIEW_TABLE, 
-        Item: review,
+        Item: { ...review },
     };
+    console.log('in reviewController.js addReview()');
+    console.log({ ...review});
     try {
         const newReview = await dynamoClient.put(params).promise(); 
         res.json(newReview); 
     } catch (error) {
-        console.error(err); 
+        console.error(error); 
         res.status(500).json({err: 'error in new-review POST request'});
     }
 };

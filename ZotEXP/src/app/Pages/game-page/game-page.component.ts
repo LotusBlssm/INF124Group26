@@ -50,22 +50,25 @@ export class GamePageComponent implements OnInit {
 
   onSubmit() {
     const review = new Review(
-      0, // TODO: NEED TO ACTUALLY GENERATE A UNIQUE REVIEW ID
-      0, // TODO: NEED TO ACTUALLY RETREIVE USER ID / INFO
+      '0', // TODO: NEED TO ACTUALLY GENERATE A UNIQUE REVIEW ID
+      '0', // TODO: NEED TO ACTUALLY RETREIVE USER ID / INFO
       this.id, 
       this.reviewForm.controls.rating.value!,
       this.reviewForm.controls.description.value!,
-      new Date(Date.now()),
+      new Date(Date.now()).getTime(),
       this.reviewForm.controls.userTags.value!
     );
 
-    this.apiService.addReview(review);
+    this.apiService.addReview(review).subscribe(data => {
+      console.log('data');
+      console.log(data);
+    });
 
     // reset form (should be done last in this function)
     this.resetForm();
 
     // display the new review
-    this.gameData.reviews.unshift(review);
+    // this.gameData.reviews.unshift(review);
   }
 
   ratingValidator(control: AbstractControl): ValidationErrors | null {
@@ -84,6 +87,8 @@ export class GamePageComponent implements OnInit {
   resetForm() {
     this.reviewForm.reset();
     (document.getElementById('userReviewTags')! as HTMLTextAreaElement).value = '';
-    this.reviewForm.get('rating')?.setValue(0);
+    this.reviewForm.controls.rating?.setValue(0);
+    this.reviewForm.controls.description?.setValue('');
+    this.reviewForm.controls.userTags?.setValue([]);
   }
 }
