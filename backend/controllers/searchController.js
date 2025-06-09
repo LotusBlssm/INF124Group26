@@ -6,8 +6,6 @@ const GAME_TABLE = '';
 
 export const getSearchResults = async (req, res) => {
     const query = decodeURI(req.query.query);
-    console.log('getSearchResults from searchController called');
-    console.log('query is ' + query);
 
     let searchResults = [];
     searchResults = await fetch(

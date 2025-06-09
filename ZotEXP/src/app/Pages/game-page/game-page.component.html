@@ -61,17 +61,19 @@
 <hr>
 
 <!-- Form to add a new review for signed in users (we'll need that check w/ the backend later) -->
-<div class="add-review-dialogue-container">
-    <form (ngSubmit)="onSubmit()" [formGroup]="reviewForm">
-        <!-- <p>What do <strong>you</strong> think about {{gameData.title}}?</p> -->
-        <igc-rating [value]="reviewForm.controls.rating.value" (igcChange)="reviewForm.controls.rating.setValue($event.detail)" min="1" max="5"></igc-rating>
-        <textarea id="userReviewText" rows="3" placeholder="What are your thoughts?" class="form-control" formControlName="description" style="margin-right: 2rem;"></textarea>
-        <textarea (input)="onTextareaChange($event)" id="userReviewTags" placeholder="tags" class="form-control"></textarea>
-        <button type="submit" [disabled]="!reviewForm.valid" style="margin-top: 0.5rem;">Submit Review</button>
-    </form>
-</div>
+@if (token) {
+    <div class="add-review-dialogue-container">
+        <form (ngSubmit)="onSubmit()" [formGroup]="reviewForm">
+            <!-- <p>What do <strong>you</strong> think about {{gameData.title}}?</p> -->
+            <igc-rating [value]="reviewForm.controls.rating.value" (igcChange)="reviewForm.controls.rating.setValue($event.detail)" min="1" max="5"></igc-rating>
+            <textarea id="userReviewText" rows="3" placeholder="What are your thoughts?" class="form-control" formControlName="description" style="margin-right: 2rem;"></textarea>
+            <textarea (input)="onTextareaChange($event)" id="userReviewTags" placeholder="tags" class="form-control"></textarea>
+            <button type="submit" [disabled]="!reviewForm.valid" style="margin-top: 0.5rem;">Submit Review</button>
+        </form>
+    </div>
 
-<hr>
+    <hr>
+}
 
 <div *ngIf="gameDataLoaded | async" class="reviews">
     @for (review of gameData.reviews; track review; let index = $index) {
