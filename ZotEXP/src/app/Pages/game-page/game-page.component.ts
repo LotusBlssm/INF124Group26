@@ -5,6 +5,7 @@ import { ReviewComponent } from '../../review/review.component';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from '../../api.service';
+import { Review } from '../../Classes/review/review';
 
 @Component({
   selector: 'app-game-page',
@@ -42,18 +43,29 @@ export class GamePageComponent implements OnInit {
 
   loadGameData() {
     // TODO: load game data (from our database, or igdb if needed)
-    
+    this.apiService.getGame(this.id).subscribe(data => {
+      this.gameData = data;
+    });
   }
 
   onSubmit() {
-    // TODO: add the review to our database (will need to get user id, but the rest (review_id, date_created, game_id) shouldn't be hard)
+    const review = new Review(
+      0, // TODO: NEED TO ACTUALLY GENERATE A UNIQUE REVIEW ID
+      0, // TODO: NEED TO ACTUALLY RETREIVE USER ID / INFO
+      this.id, 
+      this.reviewForm.controls.rating.value!,
+      this.reviewForm.controls.description.value!,
+      new Date(Date.now()),
+      this.reviewForm.controls.userTags.value!
+    );
 
-
+    this.apiService.addReview(review);
 
     // reset form (should be done last in this function)
-    this.reviewForm.reset();
-    (document.getElementById('userReviewTags')! as HTMLTextAreaElement).value = '';
-    this.reviewForm.get('rating')?.setValue(0);
+    this.resetForm();
+
+    // display the new review
+    this.gameData.reviews.unshift(review);
   }
 
   ratingValidator(control: AbstractControl): ValidationErrors | null {
@@ -67,5 +79,11 @@ export class GamePageComponent implements OnInit {
   onTextareaChange(event: Event) {
     // Converts the text the user inputted in the tags section into a list of strings (delimited by whitespace)
     this.reviewForm.controls.userTags.setValue((event.target as HTMLTextAreaElement).value.split(/\s+/));
+  }
+
+  resetForm() {
+    this.reviewForm.reset();
+    (document.getElementById('userReviewTags')! as HTMLTextAreaElement).value = '';
+    this.reviewForm.get('rating')?.setValue(0);
   }
 }
