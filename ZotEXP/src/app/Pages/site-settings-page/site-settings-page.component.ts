@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, FormsModule, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from '../../api.service';
 @Component({
@@ -13,11 +13,30 @@ import { APIService } from '../../api.service';
   styleUrl: './site-settings-page.component.css'
 })
 export class SiteSettingsPageComponent {
+  passwordsMatchValidator: ValidatorFn = (formGroup: AbstractControl): ValidationErrors | null => {
+    const group = formGroup as FormGroup;
+    const newPassword = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+
+    if (!confirmPassword || confirmPassword.trim() === '') {
+      return { confirmPassword: { required: true } };
+    }
+
+    if (confirmPassword.length < 8) {
+      return { confirmPassword: { weakPassword: true } };
+    }
+
+    if (newPassword !== confirmPassword) {
+      return { confirmPassword: { mismatch: true } };
+    }
+
+    return null;
+  }
   passwordForm = new FormGroup({
       oldPassword: new FormControl('', [Validators.required, this.oldPasswordValidator]),
       newPassword: new FormControl('', [Validators.required, this.newPassowrdValidator]),
-      confirmPassword: new FormControl('', [Validators.required, this.confirmPassowrdValidator])
-    });
+      confirmPassword: new FormControl('', Validators.required)
+    }, { validators: this.passwordsMatchValidator }); 
    get id() {
     return this.route.snapshot.paramMap.get('id');
   }
@@ -45,17 +64,7 @@ export class SiteSettingsPageComponent {
     return null;
   }
 
-  confirmPassowrdValidator(control: AbstractControl): ValidationErrors | null {
-    const confirmPassword = control.value; 
-    if (!confirmPassword || confirmPassword.trim() === '') {
-      return { require : true };
-    }
-
-    if (!/[A-Z]/.test(confirmPassword) || confirmPassword.length < 8) {
-      return { weakPassword: true };
-    }
-    return null;
-  }
+  
   onSetPassword() {
    this.passwordForm.reset();
     

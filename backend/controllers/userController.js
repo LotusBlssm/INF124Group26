@@ -1,9 +1,12 @@
 import { dynamoClient } from "../dynamoClient.js";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 // USER FUNCTIONS 
 
 const USER_TABLE = "UserTable";
+const JWT_SECRET = process.env.JWT_SECRET;
+
 export const getUser =  async (req, res) => {
     // TODO: get the game lol
     const id = req.params.id;
@@ -124,38 +127,45 @@ export const deleteUser = async (req, res) =>{
 
 // LOGIN a user
 export const loginUser = async (req, res) => {
-  const { userID, password } = req.body;
 
-  if (!userID || !password) {
-    return res.status(400).json({ error: 'username and password are required' });
-  }
-  // Should I split this error code into two different ones ? 
-  //        i.e username is required/not found, password is requried
+    const { userID, password } = req.body;
 
-  const params = {
-    TableName: USER_TABLE,
-    Key: { userID }
-  };
-
-  try {
-    const result = await dynamoClient.get(params).promise();
-    const user = result.Item;
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+    if (!userID || !password) {
+        return res.status(400).json({ error: 'username and password are required' });
     }
+    // Should I split this error code into two different ones ? 
+    //        i.e username is required/not found, password is requried
 
-    //Comparing hashes for the passwords. 
-    //  Returns an error code if the passwords (credentials) are not found
-    const isMatch = await bcrypt.compare(password, user.password);
+    const params = {
+        TableName: USER_TABLE,
+        Key: { userID }
+    };
 
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    try {
+        const result = await dynamoClient.get(params).promise();
+        const user = result.Item;
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        //Comparing hashes for the passwords. 
+        //  Returns an error code if the passwords (credentials) are not found
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        //Generating JWT
+        const token = jwt.sign({userID: user.userID}, JWT_SECRET, {expiresIn: '4h'});
+
+        res.status(200).json({ message: 'Login successful', token, user});
+        // IMPORTANT!!! 
+        //      Sends the token back to the front end for it to be stored .. I think?
+
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Login failed' });
     }
-
-    res.status(200).json({ message: 'Login successful', user });
-  } catch (err) {
-    console.error('Login error:', err);
-    res.status(500).json({ error: 'Login failed' });
-  }
 };
