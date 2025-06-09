@@ -25,7 +25,7 @@ export const getReview = async (req, res) => {
 // add new review
 export const addReview = async (req, res) => {
     //TODO: add new review 
-    const review = req.body; 
+    const review = req.body.review; 
     const params = {
         TableName: REVIEW_TABLE, 
         Item: review,
