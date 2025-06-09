@@ -31,7 +31,7 @@ export class SearchResultsPageComponent implements OnInit {
   ]
 
   allSearchResults:any = [];
-  filteredSortedResults:any = []; // may bug if getSearchResults is async
+  filteredSortedResults:any = []; 
   currentPage = 1;
   sortForm = new FormGroup({
     sortBy: new FormControl(1)
@@ -48,13 +48,15 @@ export class SearchResultsPageComponent implements OnInit {
 
   ngOnInit() {
     // Retreiving search results
-    this.loadSearchResults();
+    this.loadSearchResults(this.query);
 
     // Angular doesn't reload the component when a new search is made within the search results component
     // So we need to set up that detection manually here.
     this.route.queryParamMap.subscribe(params => {
+      console.log('change detected');
       const newQuery = params.get('query');
-      this.loadSearchResults();
+      console.log('new sword: ' + newQuery);
+      this.loadSearchResults(newQuery);
     });
 
     // Ensures Angular detects filter selection changes
@@ -63,40 +65,15 @@ export class SearchResultsPageComponent implements OnInit {
     });
   }
 
-  loadSearchResults() {
-    this.getSearchResults();
-    this.sortSearchResults();
+  async loadSearchResults(query: any) {
+    this.getSearchResults(query);
   }
   
-  getSearchResults() {
-    let searchResults:any = [];
-    // TODO: ACTUALLY GET THE DATABASE LSK:DJFSLFDSJFL
-    console.log('Loading Search Result Data from component...')
-    this.apiService.getSearchResults(this.query).subscribe(data => {
-      console.log('Component received data: ' + data);
-      console.log(data);
-      this.allSearchResults = data;
+  getSearchResults(query: any) {
+    this.apiService.getSearchResults(query).subscribe( (data:any) => {
+      this.allSearchResults = data.searchResults;
+      this.sortSearchResults();
     });
-    
-    return searchResults;
-
-    // USE THIS TO REVTRIEVE FAKE DATA
-    // function randomDate(start: Date, end: Date) {
-    //   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    // }
-    // for (let i = 0; i < 42; ++i) {
-    //   searchResults.push({
-    //     title: "Game " + (i+1),
-    //     image: undefined,
-    //     company: "Company " + (i+1),
-    //     releaseDate: randomDate(new Date(2000, 0, 1), new Date()),
-    //     description: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    //     rating: Math.random() * 5,
-    //     gameTags: ["FPS", "Team", "Free to Play", "High TTK"],
-    //     userTags: ["Teamwork Heavy", "Not for Noobs", "Mod Supported", "Replayable", "Friendly Community"]
-    //   });
-    // }
-    // return searchResults;
   }
 
   sortSearchResults() {

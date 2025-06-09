@@ -23,3 +23,7 @@
 .user-tags app-user-tag {
     margin-right: 10px;
 }
+
+a {
+    color: white;
+}
