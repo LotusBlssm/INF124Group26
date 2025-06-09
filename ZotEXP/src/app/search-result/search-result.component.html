@@ -1,14 +1,14 @@
 <div class="row search-result-container">
     <div class="col-2 image-container">
-        @if (gameData.image) {
-            <img [src]="gameData.image">
+        @if (gameData.imageURL) {
+            <img [src]="gameData.imageURL">
         }
         @else {
             <div class="image-placeholder"></div>
         }
     </div>
     <div class="col-6 textual-info-container">
-        <h2 class="italics">{{gameData.title}}</h2>
+        <a [href]="getGameURL(gameData.gameID)"><h2>{{gameData.title}}</h2></a>
         <p>
             <span class="italics">{{gameData.company}}</span> — 
             {{

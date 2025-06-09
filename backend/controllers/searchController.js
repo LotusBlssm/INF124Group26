@@ -2,10 +2,10 @@ import { dynamoClient } from "../dynamoClient.js";
 
 const CLIENT_ID = '';
 const AUTHORIZATION = '';
+const GAME_TABLE = '';
 
 export const getSearchResults = async (req, res) => {
-    // TODO: get the games lol
-    const query = req.query.query;
+    const query = decodeURI(req.query.query);
     console.log('getSearchResults from searchController called');
     console.log('query is ' + query);
 
@@ -25,13 +25,15 @@ export const getSearchResults = async (req, res) => {
     searchResults = await searchResults.json();
     searchResults = searchResults.map(v => {
         return {
-            id: v.id,
+            gameID: "" + v.id,
             title: v.name,
             imageURL: v.cover,
             company: (v.involved_companies ? v.involved_companies[0] : 'Unknown'),
-            releaseDate: new Date(v.first_release_date * 1000),
+            releaseDate: v.first_release_date
+                ? new Date(v.first_release_date * 1000).getTime()
+                : null,
             description: v.summary,
-            rating: null,
+            rating: v.rating ? v.rating / 20 : 0,
             gameTags: v.keywords != undefined ? v.keywords : [],
             userTags: [],
             reviews: []
@@ -61,7 +63,7 @@ export const getSearchResults = async (req, res) => {
                 'Client-ID': CLIENT_ID,
                 'Authorization': AUTHORIZATION,
             },
-            body: `fields id, url; where id = (${imageIDs});`
+            body: `fields id, url; where id = (${imageIDs.filter(v => v)});`
         }
     );
     imageResults = await imageResults.json();
@@ -75,7 +77,7 @@ export const getSearchResults = async (req, res) => {
                 'Client-ID': CLIENT_ID,
                 'Authorization': AUTHORIZATION,
             },
-            body: `fields company; where id = (${companyIDs});`
+            body: `fields company; where id = (${companyIDs.filter(v => v)});`
         }
     );
     companyResults = await companyResults.json();
@@ -95,14 +97,12 @@ export const getSearchResults = async (req, res) => {
                 'Client-ID': CLIENT_ID,
                 'Authorization': AUTHORIZATION,
             },
-            body: `fields name; where id = (${companyIDs});`
+            body: `fields name; where id = (${companyIDs.filter(v => v)});`
         }
     );
 
     companyResults = await companyResults.json();
 
-    console.log('hmmm');
-    console.log(gameTagIDs);
     let gameTagResults = await fetch(
         "https://api.igdb.com/v4/keywords",
         { 
@@ -112,7 +112,7 @@ export const getSearchResults = async (req, res) => {
                 'Client-ID': CLIENT_ID,
                 'Authorization': AUTHORIZATION,
             },
-            body: `fields name; where id = (${gameTagIDs});`
+            body: `fields name; where id = (${gameTagIDs.filter(v => v)});`
         }
     );
 
@@ -120,7 +120,9 @@ export const getSearchResults = async (req, res) => {
 
     let imageMap = new Map();
     for (let imageResult of imageResults) {
-        imageMap.set(imageResult.id, imageResult.url);
+        if (imageResult.url != undefined) {
+            imageMap.set(imageResult.id, imageResult.url);
+        }
     }
 
     let companyMap = new Map();
@@ -134,16 +136,56 @@ export const getSearchResults = async (req, res) => {
     }
 
     searchResults = searchResults.map(v => {
-        console.log(v.company)
         return {
             ...v, 
-            imageURL: imageMap.get(v.imageURL),
-            company: companyMap.get(preCompanyMap.get(v.company)),
+            imageURL: v.imageURL != undefined ? "https://" +  imageMap.get(v.imageURL).substring(2) : undefined,
+            company: v.company != 'Unknown' ? companyMap.get(preCompanyMap.get(v.company)) : 'Unknown',
             gameTags: v.gameTags.map(t => gameTagMap.get(t)).filter(t => t)
         }
     })
 
-    // TODO: put this data in the database (post if new, patch if old)
+    const ids = searchResults.map(v => ({ gameID: v.gameID }));
+    const params = {
+    RequestItems: {
+        [GAME_TABLE]: {
+        Keys: ids
+        }
+    }
+    };
 
-    res.status(200).json({ myData: 'hello from searchController' });
+    const existingItems = await dynamoClient.batchGet(params).promise();
+    const existingIds = new Set(existingItems.Responses[GAME_TABLE].map(item => item.gameID));
+    const toUpdate = searchResults.filter(v => existingIds.has(v.gameID));
+    const toInsert = searchResults.filter(v => !existingIds.has(v.gameID));
+
+    const existingIdsArr = Array.from(existingIds);
+    if (existingIdsArr.length > 0) {
+        const getParams = {
+            RequestItems: {
+              [GAME_TABLE]: {
+                Keys:  existingIdsArr.map(gameID => ({ gameID }))
+              }
+            }
+          };
+          
+        const existingSearchResults = await dynamoClient.batchGet(getParams).promise();
+        // TODO: update searchResults
+
+    }
+    
+    const putRequests = toInsert.map(v => ({
+        PutRequest: {
+            Item: v
+        }
+    }));
+    if (putRequests.length > 0) {
+        const writeParams = {
+            RequestItems: {
+                [GAME_TABLE]: putRequests
+            }
+        };
+        await dynamoClient.batchWrite(writeParams).promise();
+    }
+
+    res.status(200).json({ searchResults });
 }

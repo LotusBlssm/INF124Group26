@@ -1,7 +1,7 @@
 import { Review } from "../review/review";
 
 export class Game {
-    id: string = '';
+    gameID: string = '';
     title: string = '';
     imageURL: string = '';
     company: string = '';
@@ -12,7 +12,8 @@ export class Game {
     userTags: string[] = [];
     reviews: Review[] = []
 
-    constructor(title: string, imageURL: string, company: string, releaseDate: Date, description: string, rating: number, gameTags: string[], userTags: string[], reviews: Review[]) {
+    constructor(gameID: string, title: string, imageURL: string, company: string, releaseDate: Date, description: string, rating: number, gameTags: string[], userTags: string[], reviews: Review[]) {
+        this.gameID = gameID;
         this.title = title;
         this.imageURL = imageURL;
         this.company = company;
