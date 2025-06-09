@@ -1,6 +1,6 @@
 import { dynamoClient } from "../dynamoClient.js";
 // GET REIVEWS DB
-REVIEW_TABLE = "REVIEW_TABLE";
+REVIEW_TABLE = "ReviewTable";
 export const getReview = async (req, res) => {
 	//TODO: fetch the reviews from our database (id is the id of the game whose reviews we want)
     const id = req.params.id; 

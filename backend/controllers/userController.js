@@ -62,13 +62,12 @@ export const updateUser = async (req, res) => {
     }
     try {
         const updatedUser = await dynamoClient.get(params).promise();
-        if (!data.Item) {
+        if (!updatedUser.Item) {
             console.log('404');
             return res.status(404).json({ error: 'User not added' });
         }
         console.log('200');
-        res.json(data.Item);
-        res.jsaon(updatedUser); 
+        res.json(updatedUser.Item);
     } catch (error) {
         console.error(err); 
         res.status(500).json({err: 'review error'});
