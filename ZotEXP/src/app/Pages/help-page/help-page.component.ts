@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { APIService } from '../../api.service';
 
 @Component({
   selector: 'app-help-page',
@@ -13,36 +15,45 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrl: './help-page.component.css'
 })
 export class HelpPageComponent {
-  feedback: any [] = []; 
-  feedbackForm:FormGroup;
-  formSubmitted:boolean = false;
-  feedbackObj:any = {
-    email: '',
-    type: '',
-    description: ''
-  };
-  constructor(private userInput: FormBuilder) {
-    this.feedbackForm = userInput.group({
-      email: ['', Validators.required],
-      corresponse: ['', Validators.required],
-      description: ['', Validators.required]
-    });
-    
+  feedbackForm = new FormGroup({
+      email: new FormControl('', [Validators.required, this.emailValidator]),
+      corresponse: new FormControl(''),
+      description: new FormControl('', [Validators.required, this.descriptionValidator])
+  });
+  
+  get id() {
+    return this.route.snapshot.paramMap.get('id');
+  }
+
+  constructor(private route: ActivatedRoute, private apiService: APIService) {
+    console.log(this.id);
   }
   
   onSubmit(){
-    if (this.feedbackForm.valid){
-      this.formSubmitted = true; 
-      let localData = localStorage.getItem("Feedback"); 
-      this.feedback.push(
-        this.feedbackForm
-      );
-      // default setting 
-      this.feedbackObj = {
-        email: '',
-        type: '',
-        description: ''
-      };
+    this.feedbackForm.reset();
+  }
+
+  emailValidator(control: AbstractControl) : Validators | null {
+    const email = control.value; 
+    if (!email || !email.includes('.com')){
+      return { mustContainCom: true };
     }
+    return null;
+  }
+
+  typeValidator(control: AbstractControl) : Validators | null {
+    const type = control.value; 
+    if (!type) {
+      return { mustContainType: true }; 
+    }
+    return null;
+  }
+
+  descriptionValidator(control: AbstractControl) : Validators | null {
+    const description = control.value;
+    if (!description) {
+      return {mustContainDescription: true}; 
+    }
+    return null;
   }
 }

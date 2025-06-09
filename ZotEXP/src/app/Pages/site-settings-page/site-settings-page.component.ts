@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { APIService } from '../../api.service';
 @Component({
   selector: 'app-site-settings-page',
   imports: [
@@ -13,64 +13,58 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrl: './site-settings-page.component.css'
 })
 export class SiteSettingsPageComponent {
-  notification:boolean = false; 
-  expContent:boolean = false; 
-  contraMode:boolean = false; 
-  errorPassword:boolean = false; 
-  formSubmitted: boolean = false; 
-  signupUsers:any [] = []; 
-  passwordForm: FormGroup;
-  newPasswordObj:any = {
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: ''
-  };
-  constructor(private userInput: FormBuilder) {
-    this.passwordForm = userInput.group({
-      oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+  passwordForm = new FormGroup({
+      oldPassword: new FormControl('', [Validators.required, this.oldPasswordValidator]),
+      newPassword: new FormControl('', [Validators.required, this.newPassowrdValidator]),
+      confirmPassword: new FormControl('', [Validators.required, this.confirmPassowrdValidator])
     });
+   get id() {
+    return this.route.snapshot.paramMap.get('id');
+  }
+  constructor(private route: ActivatedRoute, private apiService: APIService) {
+    console.log(this.id);
    } 
 
-  onSetPassword(){
-    if (!this.passwordForm.valid){
-      return;
-    }
-    this.formSubmitted = true;
-    if (this.errorPassword) {
-      this.errorPassword = false; 
-    }
-    let localData = localStorage.getItem('signUpUsers'); 
-    this.signupUsers = localData ? JSON.parse(localData) : []; 
-    const passwordCorrect = this.signupUsers.some(user =>
-      user.password == this.newPasswordObj.oldPassword
-    );
 
-    if (!passwordCorrect) {
-      this.errorPassword = true; 
-      return 
+  oldPasswordValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.value;
+    if (!password || password.trim() === '') { 
+      return { require : true };
     }
-
-    if (this.newPasswordObj.newPassword != this.newPasswordObj.confirmPassword){
-      this.errorPassword = true; 
-      return // return for now
-    }
-    // check if the new password already exists 
-    const passwordCheck = this.signupUsers.some(user =>
-      user.password == this.newPasswordObj.newPassword
-    );
-    if (!passwordCheck){
-      this.errorPassword = true; 
-      return; 
-    }
-    // need to think how to set new password and transfer to the 
-    this.newPasswordObj = {
-      oldPassword: '', 
-      newPassword: '',
-      confirmPassword: ''
-    };
+    return null;
   }
+  newPassowrdValidator(control: AbstractControl): ValidationErrors | null {
+    const newPassword = control.value; 
+    if (!newPassword || newPassword.trim() === '') {
+      return { require : true };
+    }
+
+    if (newPassword.length < 8) {
+      return { weakPassword: true };
+    }
+    return null;
+  }
+
+  confirmPassowrdValidator(control: AbstractControl): ValidationErrors | null {
+    const confirmPassword = control.value; 
+    if (!confirmPassword || confirmPassword.trim() === '') {
+      return { require : true };
+    }
+
+    if (!/[A-Z]/.test(confirmPassword) || confirmPassword.length < 8) {
+      return { weakPassword: true };
+    }
+    return null;
+  }
+  onSetPassword() {
+   this.passwordForm.reset();
+    
+  }
+
+
+  notification = false; 
+  expContent = false; 
+  contraMode = false; 
 
   toggleNotifi(){
     this.notification = !this.notification; 
