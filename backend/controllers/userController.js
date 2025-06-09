@@ -1,40 +1,74 @@
 import { dynamoClient } from "../dynamoClient.js";
+// USER FUNCTIONS 
 
-const {getUser, getUserById, addOrUpdateUser, deleteUser} = require('../dynamoClient.js'); 
-
+const USER_TABLE = "UserTable";
 export const getUser =  async (req, res) => {
-    //TODO: fetch our database and send the user data 
-    const id = req.params.id; 
-    try {
-        const review = await getUserById(id); 
-        res.jsaon(user); 
-    } catch (error) {
-        console.error(err); 
-        res.status(500).json({err: 'error: failed to get user'});
+    // TODO: get the game lol
+    const id = req.params.id;
+    const params = {
+        TableName: USER_TABLE,
+        Key: { userID: id }
     }
 
+    try {
+        const data = await dynamoClient.put(params).promise(); 
+        if (!data.Item) {
+            console.log('404');
+            return res.status(404).json({ error: 'User not found' });
+        }
+        console.log('200');
+        res.json(data.Item);
+      } catch (err) {
+        console.log('500');
+        console.error('DynamoDB error:', err);
+        res.status(500).json({ error: 'Could not retrieve game' });
+      }
 };
 
 export const addUser = async (req, res) => {
-    //TODO: add the new user in our database
-    const review = req.body; 
-    try {
-        const newUser= await addOrUpdateReview(user);
-        res.jsaon(newUser); 
-    } catch (error) {
-        console.error(err); 
-        res.status(500).json({err: 'error: failed to add new user'});
+    // TODO: get the game lol
+    const user = req.body; 
+    console.log('id: ' + user.userID);
+    console.log('addUser() in backend controller called. Fetching from database...')
+
+    const params = {
+        TableName: USER_TABLE,
+        Item: user
     }
+
+    try {
+        const newUser = await dynamoClient.get(params).promise();
+        if (!data.Item) {
+            console.log('404');
+            return res.status(404).json({ error: 'User not added' });
+        }
+        console.log('200');
+        res.json(data.Item);
+      } catch (err) {
+        console.log('500');
+        console.error('DynamoDB error:', err);
+        res.status(500).json({ error: 'Could not retrieve game' });
+      }
   };
 
 export const updateUser = async (req, res) => {
 	//TODO: update the user in our database
     const user = req.body; 
     const {id} = req.params; 
-    review.id = id;
+    user.id = id;
+    const params = {
+        TableName: USER_TABLE,
+        Item: user
+    }
     try {
-        const updatedUser = await addOrUpdateReview(user);
-        res.jsaon(updatedUser); 
+        const updatedUser = await dynamoClient.get(params).promise();
+        if (!data.Item) {
+            console.log('404');
+            return res.status(404).json({ error: 'User not added' });
+        }
+        console.log('200');
+        res.json(data.Item);
+        res.json(updatedUser); 
     } catch (error) {
         console.error(err); 
         res.status(500).json({err: 'review error'});
@@ -46,8 +80,12 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) =>{
     //TODO: delete the user
     const {id} = req.params; 
+    const params = {
+        TableName: USER_TABLE,
+        Item: user
+    };
     try {
-        res.json(await deleteUser(id)); 
+        res.json(await dynamoClient.delete(params).promise()); 
     } catch (err) {
         console.error(err); 
         res.status(500).json({err: "failed to delete"});
