@@ -27,6 +27,7 @@ export class GamePageComponent implements OnInit {
     description: new FormControl(''),
     userTags: new FormControl<any>([]),
   });
+  token: any = localStorage.getItem('token');
 
   // Necessary to load gameData
   get id() {
@@ -34,7 +35,7 @@ export class GamePageComponent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute, private apiService: APIService) {
-    console.log(this.id);
+   
   }
 
   ngOnInit() {
@@ -59,16 +60,12 @@ export class GamePageComponent implements OnInit {
       this.reviewForm.controls.userTags.value!
     );
 
-    this.apiService.addReview(review).subscribe(data => {
-      console.log('data');
-      console.log(data);
-    });
+    this.apiService.addReview(review).subscribe(data => { });
 
     // reset form (should be done last in this function)
     this.resetForm();
 
-    // display the new review
-    // this.gameData.reviews.unshift(review);
+    this.gameData.reviews.unshift(review);
   }
 
   ratingValidator(control: AbstractControl): ValidationErrors | null {
