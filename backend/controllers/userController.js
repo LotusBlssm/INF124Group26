@@ -169,3 +169,19 @@ export const loginUser = async (req, res) => {
         res.status(500).json({ error: 'Login failed' });
     }
 };
+
+export async function batchGetUsers(userIDs, docClient) {
+    // Helper function that will search UserTable for multiple users
+    const getParams = {
+        RequestItems: {
+            ['UserTable']: {
+                Keys: userIDs.map(userID => ({'userID': userID})),
+                AttributesToGet: ['username', 'profileImage']
+            }
+        }
+    }
+    return (await docClient.batchGet(getParams, function(err, data) { 
+        if (err) console.log('batch req code 500 - ', err); 
+        // else console.log('int200 - ', data); 
+    }).promise())['Responses']['UserTable'];
+}

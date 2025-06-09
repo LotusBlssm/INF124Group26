@@ -74,3 +74,18 @@ export const deleteReview = async (req, res) => {
         res.status(500).json({err: "failed to delete review"});
     }
 };
+
+export async function batchGetReviews(reviewIDs, docClient) {
+    // Helper function that will search for an array of reviews
+    const getParams = {
+        RequestItems: {
+            ['ReviewTable']: {
+                Keys: reviewIDs
+            }
+        }
+    }
+    return (await docClient.batchGet(getParams, function(err, data) { 
+        if (err) console.log('batch req code 500 - ', err); 
+        // else console.log('int200 - ', data); 
+    }).promise())['Responses']['ReviewTable'];
+}

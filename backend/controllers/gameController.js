@@ -1,36 +1,8 @@
 import { dynamoClient } from "../dynamoClient.js";
+import { batchGetReviews } from "./reviewController.js";
+import { batchGetUsers } from "./userController.js";
+
 // import { Game } from "../../ZotExp/src/app/Classes/game/game";
-
-async function getReviews(reviewIDs, docClient) {
-    // Helper function that will search for an array of reviews
-    const getParams = {
-        RequestItems: {
-            ['ReviewTable']: {
-                Keys: reviewIDs
-            }
-        }
-    }
-    return (await docClient.batchGet(getParams, function(err, data) { 
-        if (err) console.log('int500 - ', err); 
-        // else console.log('int200 - ', data); 
-    }).promise())['Responses']['ReviewTable'];
-}
-
-async function getUsers(userIDs, docClient) {
-    // Helper function that will search UserTable for multiple users
-    const getParams = {
-        RequestItems: {
-            ['UserTable']: {
-                Keys: userIDs.map(userID => ({'userID': userID})),
-                AttributesToGet: ['username', 'profileImage']
-            }
-        }
-    }
-    return (await docClient.batchGet(getParams, function(err, data) { 
-        if (err) console.log('int500 - ', err); 
-        // else console.log('int200 - ', data); 
-    }).promise())['Responses']['UserTable'];
-}
 
 export const getGame = async (req, res) => {
     // Query the GameTable by the req's ID, then find reviews/users associated with it
@@ -62,7 +34,7 @@ export const getGame = async (req, res) => {
             console.log("404 - No reviews to grab");
         } else {
             // Make the batch query for all the reviews...
-            const gameReviewData = await getReviews(gameData.Item.reviews, dynamoClient);
+            const gameReviewData = await batchGetReviews(gameData.Item.reviews, dynamoClient);
             if (!gameReviewData) {
                 console.log("404 - Couldn't grab reviews");
             } else {
@@ -78,7 +50,7 @@ export const getGame = async (req, res) => {
             // console.log("gameReviewUserIDs: ", gameReviewUserIDs);
 
             // Then, we can send off our batch query for all these users
-            const gameReviewUsersData = await getUsers(gameReviewUserIDs, dynamoClient);
+            const gameReviewUsersData = await batchGetUsers(gameReviewUserIDs, dynamoClient);
             if (!gameReviewUsersData) {
                 console.log("404 - Couldn't grab reviews' users");
             } else {
@@ -100,6 +72,7 @@ export const getGame = async (req, res) => {
             reviews : gameReviewData
         }
         // Now we've got our final return object, let's send it back
+        // console.log("final gameReturn object:", gameReturn);
         res.json(gameReturn);
 
     } catch (err) {
