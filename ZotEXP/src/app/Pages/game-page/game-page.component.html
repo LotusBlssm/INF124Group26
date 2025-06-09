@@ -1,6 +1,6 @@
 <div class="top-container">
     <div class="left-right">
-        <div class="image-container">
+        <div *ngIf="gameDataLoaded | async" class="image-container">
             @if (gameData.image) {
                 <img [src]="gameData.image">
             }
@@ -11,11 +11,11 @@
         <div class="right-container">
             <div class="upper-container row">
                 <div class="game-info-container col-7">
-                    <div class="title-container">
+                    <div *ngIf="gameDataLoaded | async" class="title-container">
                         <h1 class="italics">{{gameData.title}}</h1>
                     </div>
                     <div class="rest-of-game-info-container">
-                        <div class="company-date-conatiner">
+                        <div *ngIf="gameDataLoaded | async" class="company-date-conatiner">
                             <p class="italics">{{gameData.company}}</p>
                             <p>
                                 {{
@@ -27,20 +27,20 @@
                                 }}
                             </p>
                         </div>
-                        <div class="game-description-container">
+                        <div *ngIf="gameDataLoaded | async" class="game-description-container">
                             <p>{{gameData.description}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="game-tags-section-container col-3">
                     <p>Game Tags</p>
-                    <div class="game-tags-container">
+                    <div *ngIf="gameDataLoaded | async" class="game-tags-container">
                         @for (tag of gameData.gameTags; track tag) {
                             <app-game-tag [text]="tag"></app-game-tag>
                         }
                     </div>
                 </div>
-                <div class="rating-container col-2">
+                <div *ngIf="gameDataLoaded | async" class="rating-container col-2">
                     <p>Rated</p>
                     <p>{{gameData.rating.toFixed(1)}} / 5</p>
                     <igc-rating readOnly [value]="gameData.rating" min="1" max="5"></igc-rating>
@@ -48,7 +48,7 @@
             </div>
             <div class="user-tags-section-container">
                 <p>Users say...</p>
-                <div class="user-tags-container">
+                <div *ngIf="gameDataLoaded | async" class="user-tags-container">
                     @for (tag of gameData.userTags; track tag) {
                         <app-user-tag [text]="tag"></app-user-tag>
                     }
@@ -73,7 +73,7 @@
 
 <hr>
 
-<div class="reviews">
+<div *ngIf="gameDataLoaded | async" class="reviews">
     @for (review of gameData.reviews; track review; let index = $index) {
         <app-review [reviewData]="review"></app-review>
     }

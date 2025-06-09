@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErro
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from '../../api.service';
 import { Review } from '../../Classes/review/review';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-game-page',
@@ -14,14 +15,16 @@ import { Review } from '../../Classes/review/review';
     UserTagComponent, 
     ReviewComponent, 
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CommonModule
     ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GamePageComponent implements OnInit {
-  gameData:any;
+  public gameData:any;
+  public gameDataLoaded: Promise<Boolean>;
   reviewForm = new FormGroup({
     rating: new FormControl(0, [Validators.required, this.ratingValidator]),
     description: new FormControl(''),
@@ -34,7 +37,8 @@ export class GamePageComponent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute, private apiService: APIService) {
-    console.log(this.id);
+    this.gameDataLoaded = Promise.resolve(false);
+    console.log('constructing game-page for', this.id);
   }
 
   ngOnInit() {
@@ -43,8 +47,10 @@ export class GamePageComponent implements OnInit {
 
   loadGameData() {
     // TODO: load game data (from our database, or igdb if needed)
-    this.apiService.getGame(this.id).subscribe(data => {
+    this.apiService.getGame(this.id).subscribe( (data:any) => {
       this.gameData = data;
+      this.gameData.releaseDate = new Date(this.gameData.releaseDate);
+      this.gameDataLoaded = Promise.resolve(true);
     });
   }
 
