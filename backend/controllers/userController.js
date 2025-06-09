@@ -1,7 +1,7 @@
 import { dynamoClient } from "../dynamoClient.js";
 // USER FUNCTIONS 
 
-USER_TABLE = "UserTable";
+const USER_TABLE = "UserTable";
 export const getUser =  async (req, res) => {
     // TODO: get the game lol
     const id = req.params.id;
@@ -21,7 +21,7 @@ export const getUser =  async (req, res) => {
       } catch (err) {
         console.log('500');
         console.error('DynamoDB error:', err);
-        res.status(500).json({ error: 'Could not retrieve game' });
+        res.status(500).json({ error: 'Could not retrieve user in GET request' });
       }
 };
 
@@ -47,7 +47,7 @@ export const addUser = async (req, res) => {
       } catch (err) {
         console.log('500');
         console.error('DynamoDB error:', err);
-        res.status(500).json({ error: 'Could not retrieve game' });
+        res.status(500).json({ error: 'error during addUser POST request' });
       }
   };
 
@@ -70,7 +70,7 @@ export const updateUser = async (req, res) => {
         res.json(updatedUser.Item);
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'review error'});
+        res.status(500).json({err: 'user update error'});
     }
   };
 
@@ -87,6 +87,6 @@ export const deleteUser = async (req, res) =>{
         res.json(await dynamoClient.delete(params).promise()); 
     } catch (err) {
         console.error(err); 
-        res.status(500).json({err: "failed to delete"});
+        res.status(500).json({err: "failed to delete user"});
     }
 };

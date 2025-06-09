@@ -1,8 +1,10 @@
 import { dynamoClient } from "../dynamoClient.js";
-// GET REIVEWS DB
-REVIEW_TABLE = "ReviewTable";
+
+// GET REVIEWS DB
+const REVIEW_TABLE = "ReviewTable";
+
 export const getReview = async (req, res) => {
-	//TODO: fetch the reviews from our database (id is the id of the game whose reviews we want)
+	//TODO: fetch the review from our database (id is the id of REVIEW we want)
     const id = req.params.id; 
     const params = {
         TableName: REVIEW_TABLE,
@@ -51,7 +53,7 @@ export const updateReview = async (req, res) => {
         res.jsaon(updatedReview); 
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'review error'});
+        res.status(500).json({err: 'review update error'});
     }
 };
 
@@ -67,6 +69,6 @@ export const deleteReview = async (req, res) =>{
         res.json(await dynamoClient.delete(params).promise()); 
     } catch (err) {
         console.error(err); 
-        res.status(500).json({err: "failed to delete"});
+        res.status(500).json({err: "failed to delete review"});
     }
 };

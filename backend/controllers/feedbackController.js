@@ -1,8 +1,9 @@
 import { dynamoClient } from "../dynamoClient.js";
-FEEDBACK_TABLE = "FeedbackTable";
+
+const FEEDBACK_TABLE = "FeedbackTable";
 
 export const getFeedback = async (req, res) => {
-    //TODO: fetch the reviews from our database (id is the id of the game whose reviews we want)
+    // get a piece of feedback from our database (specified by its ID)
     const id = req.params.id; 
     const params = {
         TableName: FEEDBACK_TABLE,
@@ -15,14 +16,13 @@ export const getFeedback = async (req, res) => {
         res.json(feedback); 
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'error in existing-review GET request'});
+        res.status(500).json({err: 'error in existing-feedback GET request'});
     }
     
 };
 
-// add new feedback
-export const addFeedback= async (req, res) =>{
-    //TODO: add new review 
+export const addFeedback = async (req, res) => {
+    // add new feedback
     const feedback = req.body; 
     const params = {
         TableName: FEEDBACK_TABLE, 
@@ -33,6 +33,6 @@ export const addFeedback= async (req, res) =>{
         res.json(newFeedback); 
     } catch (error) {
         console.error(err); 
-        res.status(500).json({err: 'error in new-review POST request'});
+        res.status(500).json({err: 'error in new-feedback POST request'});
     }
 };
