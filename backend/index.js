@@ -4,6 +4,7 @@ import { router as searchRouter } from "./routes/searchRoutes.js"
 import { router as userRouter } from "./routes/userRoutes.js"
 import { router as reviewRouter } from "./routes/reviewRoutes.js"
 import { router as feedbackRouter } from "./routes/feedbackRoutes.js"
+import { router as loginRouter } from "./routes/loginRoutes.js"
 
 import cors from "cors";
 
@@ -23,6 +24,8 @@ app.use('/api/game', gameRouter);
 app.use('/api/search', searchRouter);
 
 app.use('/api/feedback', feedbackRouter);
+
+app.use('/api/login', loginRouter);
 
 
 app.listen(port, ()=>{
