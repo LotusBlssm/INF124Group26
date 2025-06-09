@@ -1,1 +1,6 @@
 /backend/.env
+/node_modules/aws/
+/node_modules/@aws/
+/node_modules/aws-sdk/
+/node_modules/@aws-sdk/
+/node_modules/.bin/

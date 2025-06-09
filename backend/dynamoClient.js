@@ -3,13 +3,13 @@
 
 // Import statements
 import AWS from 'aws-sdk';
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
 // Grab environment variables
 AWS.config.update({ 
     region: 'us-east-2',
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACESS_KEY
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
 });
 
 // Actually create the DynamoDB client
