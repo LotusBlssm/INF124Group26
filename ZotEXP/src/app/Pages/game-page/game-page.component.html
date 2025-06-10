@@ -1,8 +1,8 @@
 <div class="top-container">
     <div class="left-right">
         <div *ngIf="gameDataLoaded | async" class="image-container">
-            @if (gameData.image) {
-                <img [src]="gameData.image">
+            @if (gameData.imageURL) {
+                <img [src]="gameData.imageURL">
             }
             @else {
                 <div class="image-placeholder"></div>
@@ -49,8 +49,13 @@
             <div class="user-tags-section-container">
                 <p>Users say...</p>
                 <div *ngIf="gameDataLoaded | async" class="user-tags-container">
-                    @for (tag of gameData.userTags; track tag) {
-                        <app-user-tag [text]="tag"></app-user-tag>
+                    @if (gameData.userTags) {
+                        @for (tag of gameData.userTags; track tag) {
+                            <app-user-tag [text]="tag"></app-user-tag>
+                        }
+                    } 
+                    @else {
+                        <p>Nothing yet, be the first to add tags!</p>
                     }
                 </div>
             </div>
@@ -61,7 +66,7 @@
 <hr>
 
 <!-- Form to add a new review for signed in users (we'll need that check w/ the backend later) -->
-@if (token) {
+@if (true) {
     <div class="add-review-dialogue-container">
         <form (ngSubmit)="onSubmit()" [formGroup]="reviewForm">
             <!-- <p>What do <strong>you</strong> think about {{gameData.title}}?</p> -->

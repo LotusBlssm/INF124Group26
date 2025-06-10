@@ -49,9 +49,23 @@ export class GamePageComponent implements OnInit {
   loadGameData() {
     // TODO: load game data (from our database, or igdb if needed)
     this.apiService.getGame(this.id).subscribe( (data:any) => {
-      this.gameData = data;
-      this.gameData.releaseDate = new Date(this.gameData.releaseDate);
-      this.gameDataLoaded = Promise.resolve(true);
+        this.gameData = data;
+        this.gameData.releaseDate = new Date(this.gameData.releaseDate);
+        // this.gameData.reviews = [];
+        for (let i = 0; i < data.reviews.length; i++) {
+            this.gameData.reviews[i] = new Review(
+                data.reviews[i].reviewID,
+                data.reviews[i].user_id,
+                data.reviews[i].game_id,
+                Number(data.reviews[i].rating),
+                data.reviews[i].description,
+                new Date(data.reviews[i].postDate),
+                data.reviews[i].user_tags
+            );
+            this.gameData.reviews[i].attachUser(data.reviewUsers[i]);
+        }
+
+        this.gameDataLoaded = Promise.resolve(true);
     });
   }
 

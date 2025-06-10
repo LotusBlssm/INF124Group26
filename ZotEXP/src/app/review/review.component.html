@@ -1,16 +1,16 @@
 <div class="review-container">
     <div class="left-right">
         <div class="left-container">
-            @if (reviewData.profilePicture) {
+            @if (reviewData.author.profilePicture) {
                 <img src="reviewData.profilePicture">
             }
             @else {
                 <div class="image-placeholder"></div>
             }
-            <p>{{reviewData.memberName}}</p>
+            <p>{{reviewData.author.username}}</p>
             <p>
                 {{
-                    reviewData.date.toLocaleDateString('en-US', {
+                    reviewData.postDate.toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric'
@@ -24,7 +24,7 @@
                 <igc-rating readOnly [value]="reviewData.rating" min="1" max="5"></igc-rating>
             </div>
             <div class="text-container">
-                {{reviewData.message}}
+                {{reviewData.description}}
             </div>
             <div class="tags-container">
 

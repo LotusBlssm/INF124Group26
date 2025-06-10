@@ -28,13 +28,13 @@ export const getGame = async (req, res) => {
 
         // Initialize the review/user arrays before processing...
         let gameReviewData = [];
-        let gameReviewUserData = [];
+        let gameReviewUsersData = [];
         if (gameData.Item.reviews.length == 0) {
             // No, so we'll have our review/user lists just be empty arrays
             console.log("404 - No reviews to grab");
         } else {
             // Make the batch query for all the reviews...
-            const gameReviewData = await batchGetReviews(gameData.Item.reviews, dynamoClient);
+            gameReviewData = await batchGetReviews(gameData.Item.reviews, dynamoClient);
             if (!gameReviewData) {
                 console.log("404 - Couldn't grab reviews");
             } else {
@@ -43,14 +43,14 @@ export const getGame = async (req, res) => {
             // Now can we get the users corresponding to each review?
 
             // First we'll need to build a list of userIDs from the reviews...
-            const gameReviewUserIDs = [];
+            let gameReviewUserIDs = [];
             for (let i = 0; i < gameReviewData.length; i++) {
                 gameReviewUserIDs[i] = gameReviewData[i]['user_id'];
             } // There's definitely a cleaner way to do this with .map() or something...
             // console.log("gameReviewUserIDs: ", gameReviewUserIDs);
 
             // Then, we can send off our batch query for all these users
-            const gameReviewUsersData = await batchGetUsers(gameReviewUserIDs, dynamoClient);
+            gameReviewUsersData = await batchGetUsers(gameReviewUserIDs, dynamoClient);
             if (!gameReviewUsersData) {
                 console.log("404 - Couldn't grab reviews' users");
             } else {
@@ -69,7 +69,8 @@ export const getGame = async (req, res) => {
             rating : gameData.Item.rating,
             gameTags : gameData.Item.gameTags,
             userTags : gameData.Item.userTags,
-            reviews : gameReviewData
+            reviews : gameReviewData,
+            reviewUsers : gameReviewUsersData
         }
         // Now we've got our final return object, let's send it back
         // console.log("final gameReturn object:", gameReturn);
