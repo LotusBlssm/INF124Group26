@@ -60,12 +60,11 @@ export class APIService {
     return data;
   }
 
-  postFeedback(feedback: Feedback) { 
+  addFeedback(feedback: Feedback) {
     console.log('API Service postFeedback() called.');
     console.log(feedback); 
-    const data = this.http.post('http://localhost:3000/api/feedback', {feedback}); 
-    return data;
-  }
+    return this.http.post('http://localhost:3000/api/feedback', feedback);
+}
 
   getFeedback(feedbackID: any) { 
     console.log('API Service getFeedback() called.');

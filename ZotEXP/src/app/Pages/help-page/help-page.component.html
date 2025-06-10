@@ -18,24 +18,35 @@
       <div class="feedback-container">
         <form (ngSubmit)="onSubmit()" [formGroup]="feedbackForm">
           <p><strong>Feedback? Concerns? Connect Us</strong></p>
+
           <!-- Email input-->
-          <input type="text" id="frame" formControlName="email" placeholder="Enter email" class="form-control" formControlName=email>
+          <input type="text" id="frame" formControlName="email" placeholder="Enter email" class="form-control">
+          <div *ngIf="feedbackForm.get('email')?.touched && feedbackForm.get('email')?.invalid" class="error">
+            <small *ngIf="feedbackForm.get('email')?.errors?.['required']">Email is required.</small>
+            <small *ngIf="feedbackForm.get('email')?.errors?.['mustContainCom']">Email must contain '.com'.</small>
+          </div>
           <br>
+
           <!-- Corresponse Selection-->
-          <select formControlName="corresponse" id="corTypes" required  class="form-control" formControlName=corresponse>
-            <option value="" disabled selected>Type of Correspondence</option>
+          <select formControlName="corresponse" id="corTypes" required class="form-control">
+            <option value="" disabled>Type of Correspondence</option>
             <option value="technical">Technical Issue</option>
             <option value="feedback">Feedback</option>
             <option value="concern">Concern</option>
           </select>
           <br>
+
           <!-- Description input-->
-          <textarea id="description" rows="4" cols="40" formControlName="description" placeholder="What's going on?"  class="form-control" formControlName=description>
-          </textarea><br>
+          <textarea id="description" rows="4" cols="40" formControlName="description" placeholder="What's going on?" class="form-control"></textarea>
+          <div *ngIf="feedbackForm.get('description')?.touched && feedbackForm.get('description')?.invalid" class="error">
+            <small *ngIf="feedbackForm.get('description')?.errors?.['required']">Description is required.</small>
+            <small *ngIf="feedbackForm.get('description')?.errors?.['mustContainDescription']">Please describe the issue.</small>
+          </div>
+          <br>
+
           <!-- Submit Button-->
           <input type="submit" value="submit" [disabled]="feedbackForm.invalid">
         </form>
-    
       </div>
     </div>
   </div>
