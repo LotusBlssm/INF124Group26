@@ -27,10 +27,10 @@ I.e. settings page should use this code before being able to access it
             import { authenticateToken } from '../middleware/auth.js';
 
             router.get('/protected-route', authenticateToken, (req, res) => {
-            res.json({ message: 'You are authenticated', user: req.user });
+                res.json({ message: 'You are authenticated', user: req.user });
             });
 
-            
+
 FRONT END USE:
 can also use:
     const token = localStorage.getItem('token');

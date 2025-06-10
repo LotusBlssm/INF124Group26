@@ -30,7 +30,7 @@ export class GamePageComponent implements OnInit {
     description: new FormControl(''),
     userTags: new FormControl<any>([]),
   });
-  token: any = localStorage.getItem('token');
+  token: any;
 
   // Necessary to load gameData
   get id() {
@@ -44,6 +44,7 @@ export class GamePageComponent implements OnInit {
 
   ngOnInit() {
     this.loadGameData();
+    this.token = localStorage.getItem('token');
   }
 
   loadGameData() {

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';   // For *ngIf, *ngFor, etc.
+import { FormsModule } from '@angular/forms';     // For [(ngModel)]
 
 @Component({
   selector: 'app-login-page',
-  imports: [],
+  standalone: true,                        // ✅ Make it standalone
+  imports: [CommonModule, FormsModule],   // ✅ Import what you use in the template
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })

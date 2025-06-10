@@ -5,6 +5,7 @@ import { HelpPageComponent } from './Pages/help-page/help-page.component';
 import { SiteSettingsPageComponent } from './Pages/site-settings-page/site-settings-page.component';
 import { SearchResultsPageComponent } from './Pages/search-results-page/search-results-page.component';
 import { GamePageComponent } from './Pages/game-page/game-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 export const routes: Routes = [
     {
@@ -34,5 +35,9 @@ export const routes: Routes = [
     {
         path: 'game/:id',
         component: GamePageComponent
+    },
+    {
+        path: 'login',
+        component: LoginPageComponent
     }
 ];
