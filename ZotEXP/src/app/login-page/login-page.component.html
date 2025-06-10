@@ -18,7 +18,7 @@
                 <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.passwordCheck"> <br>
                 <button (click)="onSignUp()"> Create Account </button>
             </form>
-            <div *ngIf="createdAccount" class="success-message">
+            <div *ngIf="createAccount" class="success-message">
                 Account Created successfully!
               </div>
         </div>
