@@ -1,7 +1,7 @@
 import { Review } from "../review/review";
 
 export class User {
-    userId: number = 0;
+    userId: string = "";
 
     username: string = "DEFAULT_USER";
     email: string = "DEFAULT_EMAIL";
@@ -18,7 +18,7 @@ export class User {
     profileImage: string = "images/blankProfilePicture.jpg";
     // userProfileImage is a string that contains the path to the default profile image. 
 
-    constructor(username: string, userId: number, email: string, password: string, 
+    constructor(username: string, userId: string, email: string, password: string, 
                 firstName: string, lastName: string, isAdmin: boolean, isLoggedIn: boolean, biography: string, profileImage: string = "images/blankProfilePicture.jpg", dateJoined: Date) {
         this.userId = userId;
         
@@ -38,7 +38,7 @@ export class User {
     static fromJSON(data: any): User {
         return new User(
             data.username,
-            Number(data.userId),
+            data.userId,
             data.email,
             data.password,
             data.firstName,

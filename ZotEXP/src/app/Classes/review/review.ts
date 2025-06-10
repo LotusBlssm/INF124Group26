@@ -26,7 +26,7 @@ export class Review {
         console.log("attachUser called in review.ts");
         this.author = new User(
             user.username,       // actual user's username
-            0, '0', '0', '0', '0', false, false, '0', // default vals
+            user.username, '0', '0', '0', '0', false, false, '0', // default vals
             user.profileImage,   // actual user's PFP
             new Date(Date.now())                      // default val
         );

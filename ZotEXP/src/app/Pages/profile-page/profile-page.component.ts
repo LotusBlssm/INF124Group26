@@ -16,7 +16,7 @@ export class ProfilePageComponent implements OnInit {
     isOwnProfilePage: boolean = false;
 
     constructor() {
-        this.user = new User("DEFAULT_USERNAME", 0, "DEFAULT_EMAIL", "DEFAULT_PASSWORD",
+        this.user = new User("DEFAULT_USERNAME", "USER_ID", "DEFAULT_EMAIL", "DEFAULT_PASSWORD",
             "DEFAULT_FIRST_NAME", "DEFAULT_LAST_NAME", false, false, "DEFAULT_BIOGRAPHY", 
             "images/blankProfilePicture.jpg", new Date());
         this.isOwnProfilePage = false;

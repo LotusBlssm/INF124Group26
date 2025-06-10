@@ -7,22 +7,21 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class APIService {
   constructor(private http: HttpClient) { }
 
-    getUser(userId: number): Observable<User> {
-        // TODO: Use the API in the backend to retrieve the user data from the database with the given userId
-        return this.http.get<any>(`http://localhost:3000/api/user/${userId}`).pipe(
-            map(data => User.fromJSON(data))
-        );
-    }
+  getUser(userId: number): Observable<User> {
+      return this.http.get<any>(`http://localhost:3000/api/user/${userId}`).pipe(
+          map(data => User.fromJSON(data))
+      );
+  }
 
   addUser(user: User) {
-    // TODO: Use the API in the backend to create a new user given the user parameter
+    console.log("recieved a request to add user", user);
+    return this.http.post('http://localhost:3000/api/user', user);
 
   }
 
