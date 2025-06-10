@@ -17,10 +17,6 @@ export class AuthService {
     })
   }
 
-  getUser() {
-    return this.userSubject.asObservable();
-  }
-
   constructor(private apiService: APIService) { 
 
   }

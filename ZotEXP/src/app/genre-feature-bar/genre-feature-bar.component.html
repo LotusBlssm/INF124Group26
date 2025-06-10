@@ -14,7 +14,7 @@
             @for (cover of featuredGenreData.covers; track cover; let index = $index) {
                 <!-- Decide whether to display a game-cover in each of the 8 spots, or to place a placeholder -->
                 @if (cover) {
-                    <img [src]=`featuredGenreData.covers[%index]`>
+                    <a [href]="cover.href"><img [src]="cover.imageURL"></a>
                 }
                 @else {
                     <div class="image-placeholder"></div>

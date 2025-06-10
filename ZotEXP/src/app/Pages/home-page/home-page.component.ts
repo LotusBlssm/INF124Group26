@@ -15,17 +15,51 @@ export class HomePageComponent {
     featuredGenres: any = this.getFeaturedGenres();
     
     getFeaturedGenres () {
-        let featuredGenres = []
-        let names = ["Most Popular Today", "New Releases", "Free to Play", "Critically Rated"]
-        let descriptions = ["Most rated, played, and currently talked about titles. You know, in case you haven’t heard of them.", "The hottest titles released in the past month, find something new to provide input for!", "desc3...", "desc4..."]
-        for (let i = 0; i < 4; ++i) {
-            featuredGenres.push({
-                name: names[i],
-                description: descriptions[i],
-                covers: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
-            })
-        }
-        console.log(featuredGenres);
-        return featuredGenres;
+        return [
+            {
+                name: "Most Popular Today",
+                description: "Most rated, played, and currently talked about titles. You know, in case you haven’t heard of them.",
+                covers: [
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9m78.webp',
+                        href: '/game/338067',
+                    },
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9adi.webp',
+                        href: '/game/328373',
+                    },
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9tlk.webp',
+                        href: '/game/329371',
+                    },
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9m71.webp',
+                        href: '/game/171233',
+                    },
+                ]
+            },
+            {
+                name: "New Releases",
+                description: "The hottest titles released in the past month, find something new to provide input for!",
+                covers: [
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co95gk.webp',
+                        href: '/game/325591',
+                    },
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9gam.webp',
+                        href: '/game/305152',
+                    },
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9xk3.webp',
+                        href: '/game/214394',
+                    },
+                    {
+                        imageURL: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co9m78.webp',
+                        href: '/game/338067',
+                    },
+                ]
+            },
+        ]
     }
 }
