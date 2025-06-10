@@ -1,18 +1,18 @@
 export class Feedback {
-    feedbackID: any; 
-    email: string = ''; 
-    solved: number = 0;
+    feedbackID: string; 
+    postDate: string;
+    email: string = '';
     description: string = ''; 
-    postDate: Date = new Date();
     type: string = '';
+    solved: string = false.toString();
 
-    constructor(feedbackID: any, email: string, solved: number, description: string, postDate: Date, type: string){
-        this.feedbackID = this.feedbackID; 
+    constructor(feedbackID: string, postDate: string, email: string, type: string, description: string, solved: string){
+        this.feedbackID = feedbackID; 
         this.email = email; 
-        this.solved = solved; 
         this.description = description; 
         this.postDate = postDate; 
         this.type = type; 
+        this.solved = solved; 
     
     }
 }
