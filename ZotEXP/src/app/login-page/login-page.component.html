@@ -1,26 +1,22 @@
 <div class="top-container">
     <div class="main"> 
-        <input type="checkbox" id="chk" aria-hidden="true">
         <div class="login" *ngIf="!showSignUp">
-            <b> Welcome! </b>
             <form>
-                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="loginObj.username"> <br>
-                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="loginObj.password"> <br>
+                <label for="chk" aria-hidden="true">WELCOME!</label>
+                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="loginObj.username">
+                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="loginObj.password">
                 <button (click)="onLogIn()"> Log In</button>
             </form>
             <button (click)="toggleSignUp()">Sign Up</button>
         </div>
         <div class="signup" *ngIf="showSignUp">
-            <b> Sign Up</b>
             <form>
-                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="signupObj.username"> <br>
-                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.password"> <br>
-                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.passwordCheck"> <br>
+                <label for="chk" aria-hidden="true">Signup</label>
+                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="signupObj.username">
+                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.password">
+                <input type="text" name="txt" placeholder="enter password again" class="form-control"[(ngModel)]="signupObj.passwordCheck">
                 <button (click)="onSignUp()"> Create Account </button>
             </form>
-            <div *ngIf="createAccount" class="success-message">
-                Account Created successfully!
-              </div>
         </div>
     </div>
 </div>
