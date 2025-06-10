@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from './Classes/user/user';
 import { Review } from './Classes/review/review';
 import { Game } from './Classes/game/game';
+import { Feedback } from './Classes/feedback/feedback';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -58,4 +59,18 @@ export class APIService {
     const data = this.http.get('http://localhost:3000/api/search', { params });
     return data;
   }
+
+  postFeedback(feedback: Feedback) { 
+    console.log('API Service postFeedback() called.');
+    console.log(feedback); 
+    const data = this.http.post('http://localhost:3000/api/feedback', {feedback}); 
+    return data;
+  }
+
+  getFeedback(feedbackID: any) { 
+    console.log('API Service getFeedback() called.');
+    console.log(feedbackID); 
+    const data = this.http.get('http://localhost:3000/api/feedback/${feedbackId}');
+  }
+
 }

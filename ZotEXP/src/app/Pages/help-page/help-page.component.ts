@@ -18,7 +18,8 @@ export class HelpPageComponent {
   feedbackForm = new FormGroup({
       email: new FormControl('', [Validators.required, this.emailValidator]),
       corresponse: new FormControl(''),
-      description: new FormControl('', [Validators.required, this.descriptionValidator])
+      description: new FormControl('', [Validators.required, this.descriptionValidator]),
+      postDate: new FormControl('')
   });
   
   get id() {
@@ -30,6 +31,8 @@ export class HelpPageComponent {
   }
   
   onSubmit(){
+    const now = new Date().toString();
+    this.feedbackForm.get('postDate')?.setValue(now);
     this.feedbackForm.reset();
   }
 
