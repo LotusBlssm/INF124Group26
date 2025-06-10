@@ -6,6 +6,7 @@ import { SiteSettingsPageComponent } from './Pages/site-settings-page/site-setti
 import { SearchResultsPageComponent } from './Pages/search-results-page/search-results-page.component';
 import { GamePageComponent } from './Pages/game-page/game-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { AuthGuard } from './auth.guard'; 
 
 export const routes: Routes = [
     {
@@ -18,7 +19,8 @@ export const routes: Routes = [
     },
     {
         path: 'profile',
-        component: ProfilePageComponent
+        component: ProfilePageComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'help',

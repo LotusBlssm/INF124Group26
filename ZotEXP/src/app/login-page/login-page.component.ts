@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';     // For [(ngModel)]
 
 @Component({
   selector: 'app-login-page',
-  standalone: true,                        // ✅ Make it standalone
-  imports: [CommonModule, FormsModule],   // ✅ Import what you use in the template
+  standalone: true,                       
+  imports: [CommonModule, FormsModule],  
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })
@@ -30,7 +30,7 @@ export class LoginPageComponent {
   }
 
   ngOnInit(): void {
-    const localData = localStorage.getItem('signUpUsers');
+    const localData = localStorage.getItem('signupUsers');
     if (localData != null){
       this.signupUsers = JSON.parse(localData);
     }

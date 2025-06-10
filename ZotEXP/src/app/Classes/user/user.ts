@@ -35,4 +35,20 @@ export class User {
         this.dateJoined = new Date(dateJoined);
     }
 
+    static fromJSON(data: any): User {
+        return new User(
+            data.username,
+            Number(data.userId),
+            data.email,
+            data.password,
+            data.firstName,
+            data.lastName,
+            data.isAdmin,
+            data.isLoggedIn,
+            data.biography,
+            data.profileImage || "images/blankProfilePicture.jpg",
+            new Date(data.dateJoined)
+        );
+    }
+
 }

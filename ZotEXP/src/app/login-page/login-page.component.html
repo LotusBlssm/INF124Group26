@@ -11,10 +11,10 @@
         </div>
         <div class="signup" *ngIf="showSignUp">
             <form>
-                <label for="chk" aria-hidden="true">Signup</label>
-                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="signupObj.username">
-                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.password">
-                <input type="text" name="txt" placeholder="enter password again" class="form-control"[(ngModel)]="signupObj.passwordCheck">
+                <input type="text" name="txt" placeholder="enter username" class="form-control" [(ngModel)]="signupObj.username"> <br>
+                <input type="text" name="txt" placeholder="enter email" class="form-control" [(ngModel)]="signupObj.email"> <br>
+                <input type="text" name="txt" placeholder="enter password" class="form-control"[(ngModel)]="signupObj.password"> <br>
+                <input type="text" name="txt" placeholder="confirm password" class="form-control"[(ngModel)]="signupObj.passwordCheck"> <br>
                 <button (click)="onSignUp()"> Create Account </button>
             </form>
         </div>

@@ -3,6 +3,10 @@ import { User } from './Classes/user/user';
 import { Review } from './Classes/review/review';
 import { Game } from './Classes/game/game';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +14,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class APIService {
   constructor(private http: HttpClient) { }
 
-  getUser(userId: number): User | null {
-    // TODO: Use the API in the backend to retrieve the user data from the database with the given userId
-
-    return null;
-  }
+    getUser(userId: number): Observable<User> {
+        // TODO: Use the API in the backend to retrieve the user data from the database with the given userId
+        return this.http.get<any>(`http://localhost:3000/api/user/${userId}`).pipe(
+            map(data => User.fromJSON(data))
+        );
+    }
 
   addUser(user: User) {
     // TODO: Use the API in the backend to create a new user given the user parameter
