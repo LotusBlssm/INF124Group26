@@ -26,6 +26,11 @@ export class APIService {
 
   }
 
+  loginUser(userID: any, password: any) {
+    const data = this.http.post('http://localhost:3000/api/user/login', { userID, password });
+    return data; 
+  }
+
   addReview(review: Review) {
     // TODO: Use the API in the backend to add a new review
     console.log('API Service addReview() called');
